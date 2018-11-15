@@ -1,0 +1,50 @@
+#IDE
+.idea/
+
+# Cmake
+CMakeFiles
+CMakeCache.txt
+cmake-build-debug
+cmake_install.cmake
+Makefile
+
+# Build files
+PlainTetris.cbp
+PlainTetris
+
+# Mac
+.DS_Store
+assets/.DS_Store
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
