@@ -1,7 +1,7 @@
 #include <iostream>
 #include "src/Component/Tetromino.cpp"
 #include "src/Field.cpp"
-#include "src/Game.cpp"
+#include "Game_old.cpp"
 #include "src/IO.cpp"
 
 using namespace std;
