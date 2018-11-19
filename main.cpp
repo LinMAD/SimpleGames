@@ -1,21 +1,24 @@
 #include <iostream>
-#include "src/Components/Tetromino.cpp"
+#include "src/Component/Tetromino.cpp"
+#include "src/Field.cpp"
+#include "src/Game.cpp"
+#include "src/IO.cpp"
 
 using namespace std;
 
 int main() {
     // TODO Add game loop
+    IO *io;
+    Tetromino *tetromino;
+    Field *field = new Field(tetromino, 100);
+    Game *game = new Game(field, tetromino, io, 200);
 
-    Tetromino tetromino;
+    game->GenerateTetromino();
+    game->DrawScene();
 
-    int block;
-    block = tetromino.GetBlock(L, Left, 0, 1);
 
-    cout << block << endl;
-    cout << "\nDump blocks" << endl;
-    cout << blocks << endl;
-    cout << "\nDump blocks init pos" << endl;
-    cout << blocksInitialPosition << endl;
+    cout << field->IsGameOver() << endl;
+    cout << field->IsFreeBlock(10, 10) << endl;
 
     return 0;
 }

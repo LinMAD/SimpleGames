@@ -1,7 +1,7 @@
 #ifndef PLAINTETRIS_BLOCK_H
 #define PLAINTETRIS_BLOCK_H
 
-#include "TetrominoComponent.h"
+#include "TetrominoType.h"
 
 // all types come in same order as enum list
 // type count, rotation positions, x, y axis
