@@ -1,15 +1,13 @@
 #include <iostream>
-#include "src/Game.cpp"
+#include "src/GameHandler.cpp"
 
 using namespace std;
+using namespace engine;
 
 int main() {
     try {
-        Game newGame;
-
-        while(newGame.tick()){
-            cout << "Tick " << endl;
-        }
+        GameHandler newGame;
+        while(newGame.tick()){}
     } catch (const runtime_error& e) {
         cout << "Fatal error: " << e.what() << endl;
 
