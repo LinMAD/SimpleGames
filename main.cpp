@@ -1,24 +1,20 @@
 #include <iostream>
-#include "src/Component/Tetromino.cpp"
-#include "src/Field.cpp"
-#include "Game_old.cpp"
-#include "src/IO.cpp"
+#include "src/Game.cpp"
 
 using namespace std;
 
 int main() {
-    // TODO Add game loop
-    IO *io;
-    Tetromino *tetromino;
-    Field *field = new Field(tetromino, 100);
-    Game *game = new Game(field, tetromino, io, 200);
+    try {
+        Game newGame;
 
-    game->GenerateTetromino();
-    game->DrawScene();
+        while(newGame.tick()){
+            cout << "Tick " << endl;
+        }
+    } catch (const runtime_error& e) {
+        cout << "Fatal error: " << e.what() << endl;
 
-
-    cout << field->IsGameOver() << endl;
-    cout << field->IsFreeBlock(10, 10) << endl;
+        return 1;
+    }
 
     return 0;
 }

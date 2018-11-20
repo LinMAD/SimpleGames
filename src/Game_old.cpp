@@ -5,7 +5,7 @@
  * Private methods
  */
 
-void Game::InitGame() {
+void GameOLD::InitGame() {
     tetroType_ = TetrominoType(GenRandomFrom(0, 6));
     tetroRotation_ = TetrominoRotation(GenRandomFrom(0, 3));
     tetroPosOnX_ = (FieldWidth / 2) + tetromino_->GetXInitPos(tetroType_, tetroRotation_);
@@ -17,7 +17,7 @@ void Game::InitGame() {
     nextTetroPosOnY_ = 5;
 }
 
-void Game::DrawPiece(int x, int y, TetrominoType type, TetrominoRotation rotation) {
+void GameOLD::DrawPiece(int x, int y, TetrominoType type, TetrominoRotation rotation) {
     IOColor tetrominoColor; // TODO Add color generation
     int pixelX = field_->GetXInPix(x);
     int pixelY = field_->GetYInPix(y);
@@ -41,7 +41,7 @@ void Game::DrawPiece(int x, int y, TetrominoType type, TetrominoRotation rotatio
     }
 }
 
-int Game::GenRandomFrom(int from, int to) {
+int GameOLD::GenRandomFrom(int from, int to) {
     std::random_device randD;
     std::mt19937 generator(randD());
     std::uniform_int_distribution<> distribute(from, to);
@@ -53,14 +53,14 @@ int Game::GenRandomFrom(int from, int to) {
  * Public methods
  */
 
-Game::Game(Field *field, Tetromino *tetromino, IO *io, int screenHeight) : screenHeight_(0) {
+GameOLD::Game(Field *field, Tetromino *tetromino, IO *io, int screenHeight) : screenHeight_(0) {
     field_ = field;
     tetromino_ = tetromino;
     io_ = io;
     screenHeight_ = screenHeight;
 }
 
-void Game::GenerateTetromino() {
+void GameOLD::GenerateTetromino() {
     tetroType_ = nextTetroType_;
     tetroRotation_ = nextTetroRotation_;
     tetroPosOnX_ = (FieldWidth / 2) + tetromino_->GetXInitPos(tetroType_, tetroRotation_);
@@ -70,7 +70,7 @@ void Game::GenerateTetromino() {
     nextTetroRotation_ = TetrominoRotation(GenRandomFrom(0, 3));
 }
 
-void Game::DrawBoard() {
+void GameOLD::DrawBoard() {
     IOColor colorOfLine = IOColor(IO_C_YELLOW);
     IOColor colorOfStoredBlock = IOColor(IO_C_WHITE);
 
@@ -99,7 +99,7 @@ void Game::DrawBoard() {
     }
 }
 
-void Game::DrawScene() {
+void GameOLD::DrawScene() {
     DrawBoard ();
     DrawPiece(tetroPosOnX_, tetroPosOnY_, tetroType_, tetroRotation_);
     DrawPiece(nextTetroPosOnX_, nextTetroPosOnY_, nextTetroType_, nextTetroRotation_);

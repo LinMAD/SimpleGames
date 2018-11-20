@@ -13,7 +13,7 @@
  * and handel tetromiono aka pieces
  * or generate new one
  */
-class Game {
+class GameOLD {
 private:
     int screenHeight_;
     // Tetromino variables for next one
