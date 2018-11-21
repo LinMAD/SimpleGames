@@ -3,6 +3,7 @@
 
 #include <random>
 #include <SDL2/SDL.h>
+#include "Component/Tetromino.h"
 
 namespace engine {
     /**
@@ -10,26 +11,15 @@ namespace engine {
      */
     class GameHandler {
     private:
+        component::Tetromino tetromino_;
         SDL_Window *window_;
         SDL_Renderer *renderer_;
         Uint32 elapsedTickTime_;
 
-        /**
-         * Generates random int in given range
-         * @param from
-         * @param to
-         * @return int
-         */
-        int genRandomFrom(int from, int to);
-
-        //void check(const Tetromino &);
+        const int screenWidth_;
+        const int screenHeight_;
     public:
-        const static int SCREEN_WIDTH = 640;
-        const static int SCREEN_HEIGHT = 480;
-        const static int SCREEN_RESOLUTION = SCREEN_WIDTH * SCREEN_HEIGHT;
-        const static int OBJECT_SCALE = SCREEN_WIDTH / 30;
-
-        GameHandler();
+        GameHandler(int screenWidth, int screenHeight);
         ~GameHandler();
 
         /**

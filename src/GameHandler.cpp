@@ -1,24 +1,23 @@
 #include <iostream>
 #include "GameHandler.h"
+#include "Component/TetrominoType.h"
+#include "Component/Generator.h"
+#include "Component/Tetromino.cpp"
 
-/**
- * Private methods
- */
-
-int engine::GameHandler::genRandomFrom(int from, int to) {
-    std::random_device randD;
-    std::mt19937 generator(randD());
-    std::uniform_int_distribution<> distribute(from, to);
-
-    return distribute(generator);
-}
+using namespace component;
 
 /**
  * Public methods
  */
 
 // Constructor
-engine::GameHandler::GameHandler() : elapsedTickTime_(SDL_GetTicks()) {
+engine::GameHandler::GameHandler(int screenWidth, int screenHeight) :
+    screenWidth_(screenWidth),
+    screenHeight_(screenHeight),
+
+    elapsedTickTime_(SDL_GetTicks()),
+    tetromino_ (Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         throw std::runtime_error("Unable to initialize SDL lib");
     }
@@ -27,8 +26,8 @@ engine::GameHandler::GameHandler() : elapsedTickTime_(SDL_GetTicks()) {
             "SovietTetris",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
+            screenWidth_,
+            screenHeight_,
             SDL_WINDOW_SHOWN
     );
     if (window_ == nullptr) {
@@ -64,39 +63,40 @@ bool engine::GameHandler::tick() {
                     break;
                 case SDLK_DOWN: {
                     std::cout << "Key down" << std::endl;
+                    tetromino_.move(0, 1);
                 }
                     break;
                 case SDLK_RIGHT: {
                     std::cout << "Key right" << std::endl;
+                    tetromino_.move(-1, 0);
                 }
                     break;
                 case SDLK_LEFT: {
                     std::cout << "Key left" << std::endl;
+                    tetromino_.move(1, 0);
                 }
                     break;
                 case SDLK_UP: {
                     std::cout << "Key up" << std::endl;
+                    tetromino_.rotate();
                 }
                     break;
             }
         }
     }
 
-    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0xff);
-
     // TODO Render shapes in class render
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0xff);
     SDL_RenderClear(renderer_);
-    SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
-    SDL_Rect rect{
-            SCREEN_WIDTH / 2,
-            0,
-            OBJECT_SCALE,
-            OBJECT_SCALE
-    };
-    SDL_RenderFillRect(renderer_, &rect);
+    tetromino_.render(renderer_, screenWidth_, screenHeight_);
+
+    // Force piece move down per each tick
+    if (SDL_GetTicks() > elapsedTickTime_) {
+        elapsedTickTime_ += 1000;
+        tetromino_.move(0, 1);
+    }
 
     SDL_RenderPresent(renderer_);
-
     return true;
 }
 
