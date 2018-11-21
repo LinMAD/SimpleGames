@@ -1,21 +1,18 @@
 #include <iostream>
-#include "src/Components/Tetromino.cpp"
+#include "src/GameHandler.cpp"
 
 using namespace std;
+using namespace engine;
 
 int main() {
-    // TODO Add game loop
+    try {
+        GameHandler newGame(640, 480);
+        while(newGame.tick()){}
+    } catch (const runtime_error& e) {
+        cout << "Fatal error: " << e.what() << endl;
 
-    Tetromino tetromino;
-
-    int block;
-    block = tetromino.GetBlock(L, Left, 0, 1);
-
-    cout << block << endl;
-    cout << "\nDump blocks" << endl;
-    cout << blocks << endl;
-    cout << "\nDump blocks init pos" << endl;
-    cout << blocksInitialPosition << endl;
+        return 1;
+    }
 
     return 0;
 }
