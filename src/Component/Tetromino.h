@@ -47,5 +47,4 @@ namespace component {
     };
 }
 
-
 #endif //SOVIETTETRIS_TETROMINO_H

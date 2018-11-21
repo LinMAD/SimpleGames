@@ -68,12 +68,12 @@ bool engine::GameHandler::tick() {
                     break;
                 case SDLK_RIGHT: {
                     std::cout << "Key right" << std::endl;
-                    tetromino_.move(-1, 0);
+                    tetromino_.move(1, 0);
                 }
                     break;
                 case SDLK_LEFT: {
                     std::cout << "Key left" << std::endl;
-                    tetromino_.move(1, 0);
+                    tetromino_.move(-1, 0);
                 }
                     break;
                 case SDLK_UP: {
