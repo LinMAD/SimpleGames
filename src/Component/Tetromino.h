@@ -44,6 +44,16 @@ namespace component {
         // Getters of current piece coordinates
         int getX() const;
         int getY() const;
+
+        /**
+         * Checking is block exist on
+         * coordinates
+         * @param x
+         * @param y
+         *
+         * @return bool
+         */
+        bool isBlock(int x, int y) const;
     };
 }
 
