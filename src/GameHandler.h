@@ -14,7 +14,7 @@ namespace engine {
         component::Tetromino tetromino_;
         SDL_Window *window_;
         SDL_Renderer *renderer_;
-        Uint32 elapsedTickTime_;
+        Uint32 speed_;
 
         const int screenWidth_;
         const int screenHeight_;

@@ -7,7 +7,10 @@ namespace engine {
      * Collision, deleting rows and gravity
      */
     class WorldHandler {
-
+    private:
+        stack[50][50];
+    public:
+        WorldHandler();
     };
 }
 

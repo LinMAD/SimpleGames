@@ -16,8 +16,7 @@ void Tetromino::render(SDL_Renderer *renderer, int screenWidth, int screenHeight
     SDL_SetRenderDrawColor(renderer, 0x00, 0x7f, 0x7f, 0xff);
 
     // Create rectangle with scaling based on screen
-    int figureScale = screenHeight / 20 + 5;
-    int coordinateCenter = screenWidth / 2;
+    int figScale = screenWidth / 2 / 20;
 
     // Generate figure in 4 slices
     for (auto x = 0; x < 4; x++) {
@@ -27,10 +26,10 @@ void Tetromino::render(SDL_Renderer *renderer, int screenWidth, int screenHeight
             }
 
             SDL_Rect rect{
-                (x + cX_) * coordinateCenter / 10,
-                (y + cY_) * coordinateCenter / 10,
-                figureScale,
-                figureScale
+                (x + cX_) * figScale + 1,
+                (y + cY_) * figScale + 1,
+                figScale - 1,
+                figScale - 1
             };
             SDL_RenderFillRect(renderer, &rect);
         }

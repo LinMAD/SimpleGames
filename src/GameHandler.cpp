@@ -12,11 +12,8 @@ using namespace component;
 
 // Constructor
 engine::GameHandler::GameHandler(int screenWidth, int screenHeight) :
-    screenWidth_(screenWidth),
-    screenHeight_(screenHeight),
-
-    elapsedTickTime_(SDL_GetTicks()),
-    tetromino_ (Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
+    screenWidth_(screenWidth), screenHeight_(screenHeight), speed_(SDL_GetTicks()),
+    tetromino_(Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         throw std::runtime_error("Unable to initialize SDL lib");
@@ -68,12 +65,16 @@ bool engine::GameHandler::tick() {
                     break;
                 case SDLK_RIGHT: {
                     std::cout << "Key right" << std::endl;
-                    tetromino_.move(1, 0);
+                    if (tetromino_.getX() < 17) {
+                        tetromino_.move(1, 0);
+                    }
                 }
                     break;
                 case SDLK_LEFT: {
                     std::cout << "Key left" << std::endl;
-                    tetromino_.move(-1, 0);
+                    if (tetromino_.getX() >= 0) {
+                        tetromino_.move(-1, 0);
+                    }
                 }
                     break;
                 case SDLK_UP: {
@@ -90,9 +91,19 @@ bool engine::GameHandler::tick() {
     SDL_RenderClear(renderer_);
     tetromino_.render(renderer_, screenWidth_, screenHeight_);
 
+    std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
+
+    // TODO Remove hardcoded collision check
+    if (tetromino_.getY() >= 12) {
+        std::cout << "Spawned new figure" << std::endl;
+        tetromino_ = Tetromino{
+                TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))
+        };
+    }
+
     // Force piece move down per each tick
-    if (SDL_GetTicks() > elapsedTickTime_) {
-        elapsedTickTime_ += 1000;
+    if (SDL_GetTicks() > speed_) {
+        speed_ += 1000;
         tetromino_.move(0, 1);
     }
 
