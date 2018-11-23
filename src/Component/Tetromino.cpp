@@ -1,6 +1,8 @@
 #include "Tetromino.h"
+#include "Setting/Properties.h"
 
-using namespace util;
+using namespace setting;
+using namespace component;
 
 /**
  * Public methods
@@ -8,7 +10,7 @@ using namespace util;
 
 // constructor
 Tetromino::Tetromino(TetrominoType type) :
-    type_(type), cX_(0), cY_(0), angle_(0) {
+    type_(type), cX_(FieldWidth / 2), cY_(0), angle_(0) {
 }
 
 void Tetromino::render(SDL_Renderer *renderer, int screenWidth) {

@@ -11,21 +11,45 @@ namespace engine {
      */
     class GameHandler {
     private:
-        util::Tetromino tetromino_;
         SDL_Window *sdlWindow_;
         SDL_Renderer *sdlRenderer_;
-        Uint32 speed_;
+        component::Tetromino tetromino_;
+
+        Uint32 gameSpeed_;
+        bool isGameOver = false;
     public:
         GameHandler();
         ~GameHandler();
 
         /**
          * Handle CPU tick
-         * to handle speed of the game
+         * to have same speed of the game
          *
          * @return bool
          */
-        bool tick();
+        void tick();
+
+        /**
+         * Handle input
+         */
+        void input();
+
+        /**
+         * Update game state
+         */
+        void update();
+
+        /**
+         * Render game objects
+         */
+        void render();
+
+        /**
+         * @return is game ended by game condition
+         */
+        bool isGameEnd() {
+            return isGameOver;
+        };
     };
 };
 

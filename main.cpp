@@ -7,7 +7,13 @@ using namespace engine;
 int main() {
     try {
         GameHandler newGame;
-        while(newGame.tick()){}
+
+        while(!newGame.isGameEnd()) {
+            newGame.tick();
+            newGame.input();
+            newGame.update();
+            newGame.render();
+        }
     } catch (const runtime_error& e) {
         cout << "Fatal error: " << e.what() << endl;
 

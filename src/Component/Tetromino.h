@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include "TetrominoType.h"
 
-namespace util {
+namespace component {
     class Tetromino {
     private:
         /**
