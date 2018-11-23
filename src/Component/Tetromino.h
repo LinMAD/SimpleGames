@@ -1,11 +1,15 @@
 #ifndef SOVIETTETRIS_TETROMINO_H
 #define SOVIETTETRIS_TETROMINO_H
 
-#include <SDL2/SDL.h>
 #include "TetrominoType.h"
+#include "AbstractVisualObject.h"
 
 namespace component {
-    class Tetromino {
+
+    /**
+     * Tetromino represent a playable object
+     */
+    class Tetromino : public AbstractVisualObject {
     private:
         /**
          * Current coordinates in axis
@@ -27,7 +31,7 @@ namespace component {
         /**
          * Render figure
          */
-        void render(SDL_Renderer *renderer, int screenWidth);
+        void render(SDL_Renderer *renderer);
 
         /**
          * Handle movement on next coordinates
@@ -43,6 +47,7 @@ namespace component {
 
         // Getters of current piece coordinates
         int getX() const;
+
         int getY() const;
 
         /**

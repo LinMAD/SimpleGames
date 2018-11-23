@@ -1,9 +1,10 @@
 #include <iostream>
 #include "GameHandler.h"
-#include "Component/TetrominoType.h"
-#include "Component/Tetromino.cpp"
 #include "Util/Generator.h"
 #include "Setting/Properties.h"
+#include "Component/TetrominoType.h"
+#include "Component/Tetromino.cpp"
+#include "Component/Board.cpp"
 
 using namespace util;
 using namespace setting;
@@ -37,6 +38,8 @@ engine::GameHandler::GameHandler() :
     if (sdlRenderer_ == nullptr) {
         throw std::runtime_error("Unable to initialize renderer");
     }
+
+    board_ = Board();
 }
 
 // De-constructor
@@ -51,6 +54,11 @@ void engine::GameHandler::tick() {
     if (SDL_GetTicks() > gameSpeed_) {
         gameSpeed_ += 1000;
         tetromino_.move(0, 1);
+        if (board_.isColliding(tetromino_)) {
+            tetromino_ = tetromino_ = Tetromino{
+                    TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))
+            };
+        }
     }
 }
 
@@ -104,10 +112,12 @@ void engine::GameHandler::input() {
 void engine::GameHandler::update() {
     SDL_SetRenderDrawColor(sdlRenderer_, 0, 0, 0, 0xff);
     SDL_RenderClear(sdlRenderer_);
-    tetromino_.render(sdlRenderer_, ScreenWidth);
+
+    board_.render(sdlRenderer_);
+    tetromino_.render(sdlRenderer_);
 
     std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
-    if (tetromino_.getY() >= FieldHeight) {
+    if (board_.isColliding(tetromino_)) {
         std::cout << "Spawned new figure" << std::endl;
         tetromino_ = Tetromino{
                 TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))

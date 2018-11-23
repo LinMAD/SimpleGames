@@ -1,5 +1,4 @@
 #include "Tetromino.h"
-#include "Setting/Properties.h"
 
 using namespace setting;
 using namespace component;
@@ -10,16 +9,14 @@ using namespace component;
 
 // constructor
 Tetromino::Tetromino(TetrominoType type) :
-    type_(type), cX_(FieldWidth / 2), cY_(0), angle_(0) {
+        type_(type), cX_(FieldWidth / 2), cY_(0), angle_(0) {
 }
 
-void Tetromino::render(SDL_Renderer *renderer, int screenWidth) {
+void Tetromino::render(SDL_Renderer *renderer) {
     // TODO Define color by tetromino type
     SDL_SetRenderDrawColor(renderer, 0x00, 0x7f, 0x7f, 0xff);
 
-    // Create rectangle with scaling based on screen
-    int figScale = screenWidth / 2 / 20;
-
+    int figScale = getObjectScale();
     // Generate figure in 4 slices
     for (auto x = 0; x < 4; x++) {
         for (auto y = 0; y < 4; y++) {
@@ -28,10 +25,10 @@ void Tetromino::render(SDL_Renderer *renderer, int screenWidth) {
             }
 
             SDL_Rect rect{
-                (x + cX_) * figScale + 1,
-                (y + cY_) * figScale + 1,
-                figScale - 1,
-                figScale - 1
+                    (x + cX_) * figScale + RECT_BORDER,
+                    (y + cY_) * figScale + RECT_BORDER,
+                    figScale - RECT_BORDER,
+                    figScale - RECT_BORDER
             };
             SDL_RenderFillRect(renderer, &rect);
         }
@@ -57,7 +54,6 @@ int Tetromino::getY() const {
     return cY_;
 }
 
-bool Tetromino::isBlock(int x, int y) const
-{
+bool Tetromino::isBlock(int x, int y) const {
     return TetrominoSprite[type_][angle_][x + y * 4] == '*';
 }

@@ -4,6 +4,7 @@
 #include <random>
 #include <SDL2/SDL.h>
 #include "Component/Tetromino.h"
+#include "Component/Board.h"
 
 namespace engine {
     /**
@@ -13,12 +14,15 @@ namespace engine {
     private:
         SDL_Window *sdlWindow_;
         SDL_Renderer *sdlRenderer_;
+
         component::Tetromino tetromino_;
+        component::Board board_;
 
         Uint32 gameSpeed_;
         bool isGameOver = false;
     public:
         GameHandler();
+
         ~GameHandler();
 
         /**
