@@ -1,46 +1,48 @@
 #include <iostream>
 #include "GameHandler.h"
 #include "Component/TetrominoType.h"
-#include "Component/Generator.h"
 #include "Component/Tetromino.cpp"
+#include "Util/Generator.h"
+#include "Setting/Screen.h"
 
-using namespace component;
+using namespace util;
+using namespace screen;
 
 /**
  * Public methods
  */
 
 // Constructor
-engine::GameHandler::GameHandler(int screenWidth, int screenHeight) :
-    screenWidth_(screenWidth), screenHeight_(screenHeight), speed_(SDL_GetTicks()),
+engine::GameHandler::GameHandler() :
+    speed_(SDL_GetTicks()),
     tetromino_(Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         throw std::runtime_error("Unable to initialize SDL lib");
     }
 
-    window_ = SDL_CreateWindow(
+    sdlWindow_ = SDL_CreateWindow(
             "SovietTetris",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
-            screenWidth_,
-            screenHeight_,
+            ScreenWidth,
+            ScreenHeight,
             SDL_WINDOW_SHOWN
     );
-    if (window_ == nullptr) {
+    if (sdlWindow_ == nullptr) {
         throw std::runtime_error("Unable to initialize window");
     }
 
-    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC);
-    if (renderer_ == nullptr) {
+    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_PRESENTVSYNC);
+    if (sdlRenderer_ == nullptr) {
         throw std::runtime_error("Unable to initialize renderer");
     }
 }
 
 // De-constructor
 engine::GameHandler::~GameHandler() {
-    SDL_DestroyRenderer(renderer_);
-    SDL_DestroyWindow(window_);
+    SDL_DestroyRenderer(sdlRenderer_);
+    SDL_DestroyWindow(sdlWindow_);
     SDL_Quit();
 }
 
@@ -87,9 +89,9 @@ bool engine::GameHandler::tick() {
     }
 
     // TODO Render shapes in class render
-    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0xff);
-    SDL_RenderClear(renderer_);
-    tetromino_.render(renderer_, screenWidth_, screenHeight_);
+    SDL_SetRenderDrawColor(sdlRenderer_, 0, 0, 0, 0xff);
+    SDL_RenderClear(sdlRenderer_);
+    tetromino_.render(sdlRenderer_, ScreenWidth);
 
     std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
 
@@ -107,7 +109,7 @@ bool engine::GameHandler::tick() {
         tetromino_.move(0, 1);
     }
 
-    SDL_RenderPresent(renderer_);
+    SDL_RenderPresent(sdlRenderer_);
     return true;
 }
 

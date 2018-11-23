@@ -11,15 +11,12 @@ namespace engine {
      */
     class GameHandler {
     private:
-        component::Tetromino tetromino_;
-        SDL_Window *window_;
-        SDL_Renderer *renderer_;
+        util::Tetromino tetromino_;
+        SDL_Window *sdlWindow_;
+        SDL_Renderer *sdlRenderer_;
         Uint32 speed_;
-
-        const int screenWidth_;
-        const int screenHeight_;
     public:
-        GameHandler(int screenWidth, int screenHeight);
+        GameHandler();
         ~GameHandler();
 
         /**

@@ -1,7 +1,7 @@
 #ifndef PLAINTETRIS_TETROMINOCOMPONENT_H
 #define PLAINTETRIS_TETROMINOCOMPONENT_H
 
-namespace component {
+namespace util {
     // All types of figures
     enum TetrominoType {
         C, I, L, N, T,

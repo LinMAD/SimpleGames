@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include "TetrominoType.h"
 
-namespace component {
+namespace util {
     class Tetromino {
     private:
         /**
@@ -27,7 +27,7 @@ namespace component {
         /**
          * Render figure
          */
-        void render(SDL_Renderer *renderer, int screenWidth, int screenHeight);
+        void render(SDL_Renderer *renderer, int screenWidth);
 
         /**
          * Handle movement on next coordinates

@@ -3,7 +3,7 @@
 
 #include <random>
 
-namespace component {
+namespace util {
     /**
      * Generates random int in given range
      *

@@ -1,6 +1,6 @@
 #include "Tetromino.h"
 
-using namespace component;
+using namespace util;
 
 /**
  * Public methods
@@ -11,7 +11,7 @@ Tetromino::Tetromino(TetrominoType type) :
     type_(type), cX_(0), cY_(0), angle_(0) {
 }
 
-void Tetromino::render(SDL_Renderer *renderer, int screenWidth, int screenHeight) {
+void Tetromino::render(SDL_Renderer *renderer, int screenWidth) {
     // TODO Define color by tetromino type
     SDL_SetRenderDrawColor(renderer, 0x00, 0x7f, 0x7f, 0xff);
 
