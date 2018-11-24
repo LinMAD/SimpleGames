@@ -23,7 +23,7 @@ namespace component {
          * @return int scaling based on screen
          */
         int getObjectScale() {
-            return setting::ScreenWidth / 2 / 20;
+            return setting::ScreenWidth / 2 / 10;
         }
     };
 }

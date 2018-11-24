@@ -54,11 +54,6 @@ void engine::GameHandler::tick() {
     if (SDL_GetTicks() > gameSpeed_) {
         gameSpeed_ += 1000;
         tetromino_.move(0, 1);
-        if (board_.isColliding(tetromino_)) {
-            tetromino_ = tetromino_ = Tetromino{
-                    TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))
-            };
-        }
     }
 }
 
@@ -84,19 +79,21 @@ void engine::GameHandler::input() {
             break;
         case SDLK_DOWN: {
             std::cout << "Key down" << std::endl;
-            tetromino_.move(0, 1);
+            if (!board_.isColliding(tetromino_)) {
+                tetromino_.move(0, 1);
+            }
         }
             break;
         case SDLK_RIGHT: {
             std::cout << "Key right" << std::endl;
-            if (tetromino_.getX() < FieldWidth) {
+            if (tetromino_.getX() <= FieldWidth) {
                 tetromino_.move(1, 0);
             }
         }
             break;
         case SDLK_LEFT: {
             std::cout << "Key left" << std::endl;
-            if (tetromino_.getX() > 0) {
+            if (tetromino_.getX() >= 0) {
                 tetromino_.move(-1, 0);
             }
         }
@@ -118,6 +115,7 @@ void engine::GameHandler::update() {
 
     std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
     if (board_.isColliding(tetromino_)) {
+        board_.process(tetromino_);
         std::cout << "Spawned new figure" << std::endl;
         tetromino_ = Tetromino{
                 TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))
