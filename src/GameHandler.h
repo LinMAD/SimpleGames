@@ -1,9 +1,10 @@
-#ifndef SOVIETTETRIS_GAME_H
-#define SOVIETTETRIS_GAME_H
+#ifndef SOVIETTETRIS_GAMEHANDLER_H
+#define SOVIETTETRIS_GAMEHANDLER_H
 
 #include <random>
 #include <SDL2/SDL.h>
-#include "Component/Tetromino.h"
+#include "Component/Figure.h"
+#include "Component/Board.h"
 
 namespace engine {
     /**
@@ -11,26 +12,47 @@ namespace engine {
      */
     class GameHandler {
     private:
-        component::Tetromino tetromino_;
-        SDL_Window *window_;
-        SDL_Renderer *renderer_;
-        Uint32 elapsedTickTime_;
+        SDL_Window *sdlWindow_;
+        SDL_Renderer *sdlRenderer_;
 
-        const int screenWidth_;
-        const int screenHeight_;
+        component::Figure currentFigure_;
+        component::Board *gameBoard_;
+
+        Uint32 gameSpeed_;
+        bool isGameOver_ = false;
     public:
-        GameHandler(int screenWidth, int screenHeight);
+        GameHandler();
         ~GameHandler();
 
         /**
-         * Handle CPU tick
-         * to handle speed of the game
-         *
-         * @return bool
+         * Prepares all game dependencies
+         * @return
          */
-        bool tick();
+        void init();
+
+        /**
+         * Handle input
+         */
+        void input();
+
+        /**
+         * Update game state
+         */
+        void update();
+
+        /**
+         * Render game objects
+         */
+        void render();
+
+        /**
+         * @return is game ended by game condition
+         */
+        bool isGameEnd() {
+            return isGameOver_;
+        };
     };
 };
 
 
-#endif //SOVIETTETRIS_GAME_H
+#endif //SOVIETTETRIS_GAMEHANDLER_H

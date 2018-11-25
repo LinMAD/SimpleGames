@@ -1,103 +1,138 @@
 #include <iostream>
 #include "GameHandler.h"
-#include "Component/TetrominoType.h"
-#include "Component/Generator.h"
-#include "Component/Tetromino.cpp"
+#include "Util/Generator.h"
+#include "Setting/Properties.h"
+#include "Component/FigureType.h"
+#include "Component/Figure.cpp"
+#include "Component/Board.cpp"
 
-using namespace component;
+using namespace util;
+using namespace setting;
 
 /**
  * Public methods
  */
 
 // Constructor
-engine::GameHandler::GameHandler(int screenWidth, int screenHeight) :
-    screenWidth_(screenWidth),
-    screenHeight_(screenHeight),
-
-    elapsedTickTime_(SDL_GetTicks()),
-    tetromino_ (Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
-
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        throw std::runtime_error("Unable to initialize SDL lib");
-    }
-
-    window_ = SDL_CreateWindow(
-            "SovietTetris",
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            screenWidth_,
-            screenHeight_,
-            SDL_WINDOW_SHOWN
-    );
-    if (window_ == nullptr) {
-        throw std::runtime_error("Unable to initialize window");
-    }
-
-    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_PRESENTVSYNC);
-    if (renderer_ == nullptr) {
-        throw std::runtime_error("Unable to initialize renderer");
-    }
+engine::GameHandler::GameHandler() :
+        gameSpeed_(SDL_GetTicks()),
+        currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))}) {
+    gameBoard_ = new Board();
 }
 
 // De-constructor
 engine::GameHandler::~GameHandler() {
-    SDL_DestroyRenderer(renderer_);
-    SDL_DestroyWindow(window_);
+    SDL_DestroyRenderer(sdlRenderer_);
+    SDL_DestroyWindow(sdlWindow_);
     SDL_Quit();
 }
 
-// tick cycle
-bool engine::GameHandler::tick() {
-    // TODO Handle user input in different class
+void engine::GameHandler::init() {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        throw std::runtime_error("Unable to initialize SDL lib");
+    }
+
+    sdlWindow_ = SDL_CreateWindow(
+            "SovietTetris",
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            ScreenWidth,
+            ScreenHeight,
+            SDL_WINDOW_SHOWN
+    );
+    if (sdlWindow_ == nullptr) {
+        throw std::runtime_error(SDL_GetError());
+    }
+
+    sdlRenderer_ = SDL_CreateRenderer(sdlWindow_, -1, SDL_RENDERER_PRESENTVSYNC);
+    if (sdlRenderer_ == nullptr) {
+        throw std::runtime_error(SDL_GetError());
+    }
+}
+
+void engine::GameHandler::input() {
     SDL_Event event;
 
-    if (SDL_WaitEventTimeout(&event, 250)) {
-        if (event.type == SDL_QUIT) {
-            return false;
-        }
+    if (!SDL_WaitEventTimeout(&event, 250)) {
+        return;
+    }
 
-        if (event.type == SDL_KEYDOWN) {
-            switch (event.key.keysym.sym) {
-                default:
-                    break;
-                case SDLK_DOWN: {
-                    std::cout << "Key down" << std::endl;
-                    tetromino_.move(0, 1);
-                }
-                    break;
-                case SDLK_RIGHT: {
-                    std::cout << "Key right" << std::endl;
-                    tetromino_.move(-1, 0);
-                }
-                    break;
-                case SDLK_LEFT: {
-                    std::cout << "Key left" << std::endl;
-                    tetromino_.move(1, 0);
-                }
-                    break;
-                case SDLK_UP: {
-                    std::cout << "Key up" << std::endl;
-                    tetromino_.rotate();
-                }
-                    break;
+    if (event.type == SDL_QUIT) {
+        isGameOver_ = true;
+
+        return;
+    }
+
+    if (event.type != SDL_KEYDOWN) {
+        return;
+    }
+
+    switch (event.key.keysym.sym) {
+        default:
+            break;
+        case SDLK_DOWN: {
+            Figure figureInFuture = currentFigure_;
+            figureInFuture.move(0, 1);
+            if (!gameBoard_->isColliding(figureInFuture)) {
+                currentFigure_ = figureInFuture;
             }
         }
+            break;
+        case SDLK_RIGHT: {
+            Figure figureInFuture = currentFigure_;
+            figureInFuture.move(1, 0);
+            if (!gameBoard_->isColliding(figureInFuture)) {
+                currentFigure_ = figureInFuture;
+            }
+        }
+            break;
+        case SDLK_LEFT: {
+            Figure figureInFuture = currentFigure_;
+            figureInFuture.move(-1, 0);
+            if (!gameBoard_->isColliding(figureInFuture)) {
+                currentFigure_ = figureInFuture;
+            }
+        }
+            break;
+        case SDLK_UP: {
+            Figure figureInFuture = currentFigure_;
+            figureInFuture.rotate();
+            if (!gameBoard_->isColliding(figureInFuture)) {
+                currentFigure_ = figureInFuture;
+            }
+        }
+            break;
     }
-
-    // TODO Render shapes in class render
-    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0xff);
-    SDL_RenderClear(renderer_);
-    tetromino_.render(renderer_, screenWidth_, screenHeight_);
-
-    // Force piece move down per each tick
-    if (SDL_GetTicks() > elapsedTickTime_) {
-        elapsedTickTime_ += 1000;
-        tetromino_.move(0, 1);
-    }
-
-    SDL_RenderPresent(renderer_);
-    return true;
 }
+
+void engine::GameHandler::update() {
+    // TODO Check if game ended
+
+    if (SDL_GetTicks() > gameSpeed_) {
+        gameSpeed_ += 1000; // TODO Game speed must be incremented
+        // Check if game still playable
+        Figure figureInFuture = currentFigure_;
+        figureInFuture.move(0, 1);
+        if (gameBoard_->isColliding(figureInFuture)) {
+            gameBoard_->collect(currentFigure_);
+            currentFigure_ = Figure{FigureType(
+                    generateRandom(FigureType::I, FigureType::Z))
+            };
+        } else {
+            currentFigure_ = figureInFuture;
+        }
+    }
+}
+
+void engine::GameHandler::render() {
+    SDL_SetRenderDrawColor(sdlRenderer_, 0, 0, 0, 0xff);
+    SDL_RenderClear(sdlRenderer_);
+
+    gameBoard_->render(sdlRenderer_);
+    currentFigure_.render(sdlRenderer_);
+
+    SDL_RenderPresent(sdlRenderer_);
+}
+
 
 
