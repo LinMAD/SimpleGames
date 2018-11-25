@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_VISUALOBJECT_H
-#define SOVIETTETRIS_VISUALOBJECT_H
+#ifndef SOVIETTETRIS_ABSTRACTVISUALOBJECT_H
+#define SOVIETTETRIS_ABSTRACTVISUALOBJECT_H
 
 #include <SDL2/SDL.h>
 #include "Setting/Properties.h"
@@ -10,6 +10,7 @@ namespace component {
      */
     class AbstractVisualObject {
     public:
+        // SDL rect border pixel
         int RECT_BORDER = 1;
 
         /**
@@ -28,4 +29,4 @@ namespace component {
     };
 }
 
-#endif //SOVIETTETRIS_VISUALOBJECT_H
+#endif //SOVIETTETRIS_ABSTRACTVISUALOBJECT_H

@@ -5,18 +5,19 @@ using namespace std;
 using namespace engine;
 
 int main() {
-    try {
-        GameHandler newGame;
+    GameHandler tetrisGame;
 
-        while(!newGame.isGameEnd()) {
-            newGame.input();
-            newGame.update();
-            newGame.render();
-        }
+    try {
+        tetrisGame.init();
     } catch (const runtime_error& e) {
         cout << "Fatal error: " << e.what() << endl;
-
         return 1;
+    }
+
+    while(!tetrisGame.isGameEnd()) {
+        tetrisGame.input();
+        tetrisGame.update();
+        tetrisGame.render();
     }
 
     return 0;

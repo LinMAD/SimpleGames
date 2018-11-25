@@ -1,16 +1,16 @@
-#ifndef PLAINTETRIS_TETROMINOCOMPONENT_H
-#define PLAINTETRIS_TETROMINOCOMPONENT_H
+#ifndef SOVIETTETRIS_FIGURETYPE_H
+#define SOVIETTETRIS_FIGURETYPE_H
 
 namespace component {
-    const int TETROMINO_SIZE = 4;
+    const int FIGURE_SIZE = 4;
 
     // All types of figures
-    enum TetrominoType {
+    enum FigureType {
         I, J, L, O, S, T, Z
     };
 
     // All figures sprites
-    static const char *TetrominoSprite[][4] = {
+    static const char *FigureSprite[][4] = {
             {
                     " *  "
                     " *  "
@@ -140,4 +140,4 @@ namespace component {
     };
 }
 
-#endif //PLAINTETRIS_TETROMINOCOMPONENT_H
+#endif //SOVIETTETRIS_FIGURETYPE_H

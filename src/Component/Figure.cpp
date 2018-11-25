@@ -1,4 +1,4 @@
-#include "Tetromino.h"
+#include "Figure.h"
 
 using namespace setting;
 using namespace component;
@@ -8,11 +8,11 @@ using namespace component;
  */
 
 // constructor
-Tetromino::Tetromino(TetrominoType type) :
+Figure::Figure(FigureType type) :
         type_(type), cX_(FieldWidth / 2 - 2), cY_(0), angle_(0) {
 }
 
-void Tetromino::render(SDL_Renderer *renderer) {
+void Figure::render(SDL_Renderer *renderer) {
     // TODO Define color by tetromino type
     SDL_SetRenderDrawColor(renderer, 0, 100, 200, 100);
 
@@ -35,25 +35,25 @@ void Tetromino::render(SDL_Renderer *renderer) {
     }
 }
 
-void Tetromino::move(int nextX, int nextY) {
+void Figure::move(int nextX, int nextY) {
     cX_ += nextX;
     cY_ += nextY;
 }
 
-void Tetromino::rotate() {
+void Figure::rotate() {
     // Make rotation 90*
     angle_ += 3;
     angle_ %= 4;
 }
 
-int Tetromino::getX() const {
+int Figure::getX() const {
     return cX_;
 }
 
-int Tetromino::getY() const {
+int Figure::getY() const {
     return cY_;
 }
 
-bool Tetromino::isBlock(int x, int y) const {
-    return TetrominoSprite[type_][angle_][x + y * 4] == '*';
+bool Figure::isBlock(int x, int y) const {
+    return FigureSprite[type_][angle_][x + y * 4] == '*';
 }

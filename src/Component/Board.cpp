@@ -37,24 +37,26 @@ void Board::render(SDL_Renderer *renderer) {
     }
 }
 
-bool Board::isColliding(Tetromino &tetromino) {
-    for (int x = 0; x < TETROMINO_SIZE; x++) {
-        for (int y = 0; y < TETROMINO_SIZE; y++) {
-            if (!tetromino.isBlock(x, y)) {
+bool Board::isColliding(Figure &fig) {
+    for (int x = 0; x < FIGURE_SIZE; x++) {
+        for (int y = 0; y < FIGURE_SIZE; y++) {
+            if (!fig.isBlock(x, y)) {
                 continue;
             }
 
-            auto boardX = tetromino.getX() + x;
-            auto boardY = tetromino.getY() + y;
+            // Check if figure collides with game board
+            int boardX = fig.getX() + x;
+            if (boardX < 0 || boardX >= setting::FieldWidth) {
+                return true;
+            }
 
-            if (boardX < 0 || boardX >= setting::FieldWidth || boardY < 0 || boardY >= setting::FieldHeight) {
+            int boardY = fig.getY() + y;
+            if (boardY < 0 || boardY >= setting::FieldHeight) {
                 return true;
             }
 
             // Check if future figure will collide with next in matrix
             if (boardMatrix_[boardX][boardY]) {
-                std::cout << "In figure Matrix: x -> " << boardX << " y -> " << boardY << std::endl;
-
                 return true;
             }
         }
@@ -63,13 +65,40 @@ bool Board::isColliding(Tetromino &tetromino) {
     return false;
 }
 
-void Board::collect(const Tetromino &tetromino) {
+void Board::collect(const Figure &fig) {
     // Fill figure to board matrix
-    for (int x = 0; x < TETROMINO_SIZE; x++) {
-        for (int y = 0; y < TETROMINO_SIZE; y++) {
-            if (tetromino.isBlock(x, y)) {
-                boardMatrix_[tetromino.getX() + x][tetromino.getY() + y] = true;
+    for (int x = 0; x < FIGURE_SIZE; x++) {
+        for (int y = 0; y < FIGURE_SIZE; y++) {
+            if (fig.isBlock(x, y)) {
+                boardMatrix_[fig.getX() + x][fig.getY() + y] = true;
             }
+        }
+    }
+
+    // TODO Add game score for removed lines: more lines remove once, more points
+    // Check all lines
+    for (int line = setting::FieldHeight - 1; line >= 0; line--) {
+        bool isSolidLine = true;
+        for (auto &row : boardMatrix_) {
+            if (!row[line]) {
+                isSolidLine = false;
+
+                break;
+            }
+        }
+
+        if (!isSolidLine) {
+            continue;
+        }
+
+        for (int y = line - 1; y >= 0; y--) {
+            for (auto &x : boardMatrix_) {
+                x[y + 1] = x[y];
+            }
+        }
+
+        for (auto &x : boardMatrix_) {
+            x[0] = false;
         }
     }
 }

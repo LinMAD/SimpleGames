@@ -1,9 +1,9 @@
-#ifndef SOVIETTETRIS_GAME_H
-#define SOVIETTETRIS_GAME_H
+#ifndef SOVIETTETRIS_GAMEHANDLER_H
+#define SOVIETTETRIS_GAMEHANDLER_H
 
 #include <random>
 #include <SDL2/SDL.h>
-#include "Component/Tetromino.h"
+#include "Component/Figure.h"
 #include "Component/Board.h"
 
 namespace engine {
@@ -15,15 +15,20 @@ namespace engine {
         SDL_Window *sdlWindow_;
         SDL_Renderer *sdlRenderer_;
 
-        component::Tetromino tetromino_;
-        component::Board board_;
+        component::Figure currentFigure_;
+        component::Board *gameBoard_;
 
         Uint32 gameSpeed_;
-        bool isGameOver = false;
+        bool isGameOver_ = false;
     public:
         GameHandler();
-
         ~GameHandler();
+
+        /**
+         * Prepares all game dependencies
+         * @return
+         */
+        void init();
 
         /**
          * Handle input
@@ -44,10 +49,10 @@ namespace engine {
          * @return is game ended by game condition
          */
         bool isGameEnd() {
-            return isGameOver;
+            return isGameOver_;
         };
     };
 };
 
 
-#endif //SOVIETTETRIS_GAME_H
+#endif //SOVIETTETRIS_GAMEHANDLER_H

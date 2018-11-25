@@ -1,15 +1,14 @@
-#ifndef SOVIETTETRIS_TETROMINO_H
-#define SOVIETTETRIS_TETROMINO_H
+#ifndef SOVIETTETRIS_FIGURE_H
+#define SOVIETTETRIS_FIGURE_H
 
-#include "TetrominoType.h"
 #include "AbstractVisualObject.h"
+#include "FigureType.h"
 
 namespace component {
-
     /**
-     * Tetromino represent a playable object
+     * Figure represent a playable object
      */
-    class Tetromino : public AbstractVisualObject {
+    class Figure : public AbstractVisualObject {
     private:
         /**
          * Current coordinates in axis
@@ -24,14 +23,14 @@ namespace component {
         /**
          * Type of piece
          */
-        TetrominoType type_;
+        FigureType type_;
     public:
-        explicit Tetromino(TetrominoType type);
+        explicit Figure(FigureType type);
 
         /**
          * Render figure
          */
-        void render(SDL_Renderer *renderer);
+        void render(SDL_Renderer *renderer) override;
 
         /**
          * Handle movement on next coordinates
@@ -45,9 +44,14 @@ namespace component {
          */
         void rotate();
 
-        // Getters of current piece coordinates
+        /**
+         * @return int of current coordinate axis
+         */
         int getX() const;
 
+        /**
+         * @return int of current coordinate axis
+         */
         int getY() const;
 
         /**
@@ -62,4 +66,4 @@ namespace component {
     };
 }
 
-#endif //SOVIETTETRIS_TETROMINO_H
+#endif //SOVIETTETRIS_FIGURE_H

@@ -1,9 +1,9 @@
 #ifndef SOVIETTETRIS_BOARD_H
 #define SOVIETTETRIS_BOARD_H
 
-#include "AbstractVisualObject.h"
 #include "Setting/Properties.h"
-#include "Component/Tetromino.h"
+#include "Component/AbstractVisualObject.h"
+#include "Component/Figure.h"
 
 namespace component {
 
@@ -14,6 +14,7 @@ namespace component {
      */
     class Board : public AbstractVisualObject {
     private:
+        // TODO Add game score
         bool boardMatrix_[setting::FieldWidth][setting::FieldHeight];
     public:
         Board();
@@ -27,15 +28,15 @@ namespace component {
         /**
          * Check whole board matrix on collision
          *
-         * @param tetromino
+         * @param fig
          * @return is colliding with object
          */
-        bool isColliding(Tetromino &tetromino);
+        bool isColliding(Figure &fig);
 
         /**
          * Collect figure to board
          */
-        void collect(const Tetromino &tetromino);
+        void collect(const Figure &fig);
     };
 }
 
