@@ -2,9 +2,11 @@
 #define PLAINTETRIS_TETROMINOCOMPONENT_H
 
 namespace component {
+    const int TETROMINO_SIZE = 4;
+
     // All types of figures
     enum TetrominoType {
-        C, I, L, N, T,
+        I, J, L, O, S, T, Z
     };
 
     // All figures sprites

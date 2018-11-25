@@ -16,7 +16,7 @@ using namespace setting;
 // Constructor
 engine::GameHandler::GameHandler() :
         gameSpeed_(SDL_GetTicks()),
-        tetromino_(Tetromino{TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))}) {
+        tetromino_(Tetromino{TetrominoType(generateRandom(TetrominoType::I, TetrominoType::Z))}) {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         throw std::runtime_error("Unable to initialize SDL lib");
@@ -49,14 +49,6 @@ engine::GameHandler::~GameHandler() {
     SDL_Quit();
 }
 
-// tick cycle
-void engine::GameHandler::tick() {
-    if (SDL_GetTicks() > gameSpeed_) {
-        gameSpeed_ += 1000;
-        tetromino_.move(0, 1);
-    }
-}
-
 void engine::GameHandler::input() {
     SDL_Event event;
 
@@ -78,52 +70,61 @@ void engine::GameHandler::input() {
         default:
             break;
         case SDLK_DOWN: {
-            std::cout << "Key down" << std::endl;
-            if (!board_.isColliding(tetromino_)) {
-                tetromino_.move(0, 1);
-            }
+            Tetromino t = tetromino_;
+            t.move(0, 1);
+            if (!board_.isColliding(t))
+                tetromino_ = t;
         }
             break;
         case SDLK_RIGHT: {
-            std::cout << "Key right" << std::endl;
-            if (tetromino_.getX() <= FieldWidth) {
-                tetromino_.move(1, 0);
-            }
+            Tetromino t = tetromino_;
+            t.move(1, 0);
+            if (!board_.isColliding(t))
+                tetromino_ = t;
         }
             break;
         case SDLK_LEFT: {
-            std::cout << "Key left" << std::endl;
-            if (tetromino_.getX() >= 0) {
-                tetromino_.move(-1, 0);
-            }
+            Tetromino t = tetromino_;
+            t.move(-1, 0);
+            if (!board_.isColliding(t))
+                tetromino_ = t;
         }
             break;
         case SDLK_UP: {
-            std::cout << "Key up" << std::endl;
-            tetromino_.rotate();
+            Tetromino t = tetromino_;
+            t.rotate();
+            if (!board_.isColliding(t))
+                tetromino_ = t;
         }
             break;
     }
 }
 
 void engine::GameHandler::update() {
+    if (SDL_GetTicks() > gameSpeed_) {
+
+            gameSpeed_ += 1000;
+            Tetromino t = tetromino_;
+            t.move(0, 1);
+
+            std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
+            if (board_.isColliding(t)) {
+
+                board_.collect(tetromino_);
+                tetromino_ = Tetromino{
+                        TetrominoType(generateRandom(TetrominoType::I, TetrominoType::Z))
+                };
+            }
+    }
+}
+
+void engine::GameHandler::render() {
     SDL_SetRenderDrawColor(sdlRenderer_, 0, 0, 0, 0xff);
     SDL_RenderClear(sdlRenderer_);
 
     board_.render(sdlRenderer_);
     tetromino_.render(sdlRenderer_);
 
-    std::cout << "Current figure X: " << tetromino_.getX() << " Y: " << tetromino_.getY() << std::endl;
-    if (board_.isColliding(tetromino_)) {
-        board_.process(tetromino_);
-        std::cout << "Spawned new figure" << std::endl;
-        tetromino_ = Tetromino{
-                TetrominoType(generateRandom(TetrominoType::C, TetrominoType::T))
-        };
-    }
-}
-
-void engine::GameHandler::render() {
     SDL_RenderPresent(sdlRenderer_);
 }
 

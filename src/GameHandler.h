@@ -26,14 +26,6 @@ namespace engine {
         ~GameHandler();
 
         /**
-         * Handle CPU tick
-         * to have same speed of the game
-         *
-         * @return bool
-         */
-        void tick();
-
-        /**
          * Handle input
          */
         void input();

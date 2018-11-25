@@ -35,7 +35,7 @@ namespace component {
         /**
          * Collect figure to board
          */
-        void process(const Tetromino &tetromino);
+        void collect(const Tetromino &tetromino);
     };
 }
 

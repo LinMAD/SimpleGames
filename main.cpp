@@ -9,7 +9,6 @@ int main() {
         GameHandler newGame;
 
         while(!newGame.isGameEnd()) {
-            newGame.tick();
             newGame.input();
             newGame.update();
             newGame.render();

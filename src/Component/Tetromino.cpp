@@ -9,12 +9,12 @@ using namespace component;
 
 // constructor
 Tetromino::Tetromino(TetrominoType type) :
-        type_(type), cX_(FieldWidth / 2), cY_(0), angle_(0) {
+        type_(type), cX_(FieldWidth / 2 - 2), cY_(0), angle_(0) {
 }
 
 void Tetromino::render(SDL_Renderer *renderer) {
     // TODO Define color by tetromino type
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x7f, 0x7f, 0xff);
+    SDL_SetRenderDrawColor(renderer, 0, 100, 200, 100);
 
     int figScale = getObjectScale();
     // Generate figure in 4 slices

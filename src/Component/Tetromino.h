@@ -17,7 +17,7 @@ namespace component {
         int cX_, cY_;
 
         /**
-         * Current angele (how it's rotated max 360)
+         * Current angele (how it's rotated max 360==0)
          */
         int angle_;
 
