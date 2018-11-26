@@ -14,8 +14,22 @@ namespace component {
      */
     class Board : public AbstractVisualObject {
     private:
-        // TODO Add game score
         bool boardMatrix_[setting::FieldWidth][setting::FieldHeight];
+        unsigned int boardScore_;
+
+        /**
+         * Calculate score price for removed lines
+         * Formula:
+         * 80 * (removedLines + 1)
+         *
+         * @param removedLines of figures aka tetromino
+         *
+         * @return return int
+         */
+        void calculateScore(int removedLines) {
+            boardScore_ += static_cast<unsigned int>(80 * (removedLines + 1));
+        }
+
     public:
         Board();
 
@@ -37,6 +51,11 @@ namespace component {
          * Collect figure to board
          */
         void collect(const Figure &fig);
+
+        /**
+         * @return int current board score
+         */
+        int getBoardScore();
     };
 }
 

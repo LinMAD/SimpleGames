@@ -22,6 +22,7 @@ namespace engine {
         bool isGameOver_ = false;
     public:
         GameHandler();
+
         ~GameHandler();
 
         /**

@@ -3,7 +3,7 @@
 
 using namespace component;
 
-Board::Board() : boardMatrix_{{false}} {}
+Board::Board() : boardMatrix_{{false}}, boardScore_(0) {}
 
 void Board::render(SDL_Renderer *renderer) {
     int figScale = getObjectScale();
@@ -75,7 +75,8 @@ void Board::collect(const Figure &fig) {
         }
     }
 
-    // TODO Add game score for removed lines: more lines remove once, more points
+    unsigned int removedLines = 0;
+
     // Check all lines
     for (int line = setting::FieldHeight - 1; line >= 0; line--) {
         bool isSolidLine = true;
@@ -91,6 +92,7 @@ void Board::collect(const Figure &fig) {
             continue;
         }
 
+        removedLines++;
         for (int y = line - 1; y >= 0; y--) {
             for (auto &x : boardMatrix_) {
                 x[y + 1] = x[y];
@@ -101,4 +103,12 @@ void Board::collect(const Figure &fig) {
             x[0] = false;
         }
     }
+
+    if (removedLines != 0) {
+        calculateScore(removedLines);
+    }
+}
+
+int Board::getBoardScore() {
+    return boardScore_;
 }

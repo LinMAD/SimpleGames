@@ -67,6 +67,8 @@ void engine::GameHandler::input() {
         return;
     }
 
+    // TODO Lock keys if figure processing in game board, it's need be done to not mess figure place in cycle
+
     switch (event.key.keysym.sym) {
         default:
             break;
@@ -122,6 +124,8 @@ void engine::GameHandler::update() {
             currentFigure_ = figureInFuture;
         }
     }
+
+    std::cout << "Game score: " << gameBoard_->getBoardScore() << std::endl;
 }
 
 void engine::GameHandler::render() {
