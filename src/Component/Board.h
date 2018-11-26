@@ -22,7 +22,10 @@ namespace component {
         // Board total score
         unsigned int boardScore_;
         // Board life it's time life score modification, higher number, more points
-        unsigned int boardLife_ ;
+        unsigned int boardLife_;
+
+        // Board will show next figure
+        Figure nextFigure_;
 
         /**
          * Calculate score price for removed lines
@@ -39,11 +42,9 @@ namespace component {
                 boardScore_ += 80 * (removedLines + boardLife_);
             }
         }
+
     public:
-        Board() {
-            boardScore_ = 0;
-            boardLife_ = 1;
-        }
+        explicit Board(Figure nextFigure);
 
         /**
          * Provide game field
@@ -62,7 +63,19 @@ namespace component {
         /**
          * Collect figure to board
          */
-        void collect(const Figure &fig);
+        void handleStore(const Figure &fig);
+
+        /**
+         * Show next type of figure
+         *
+         * @param type
+         */
+        void setNextFigure(Figure next);
+
+        /**
+         * @return pointer to next figure
+         */
+        Figure getNextFigure();
 
         /**
          * @return int current board score

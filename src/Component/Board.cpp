@@ -1,16 +1,45 @@
+#include <utility>
+
 #include <iostream>
 #include "Board.h"
 
 using namespace component;
+using namespace setting;
+
+Board::Board(Figure nextFigure) : boardScore_(0),  boardLife_(1), nextFigure_(nextFigure) {}
 
 void Board::render(SDL_Renderer *renderer) {
     int figScale = getObjectScale();
-
     // TODO Add score on right screen
-    // TODO Add next generated figure
 
-    for (auto x = 0; x < setting::FieldWidth; x++) {
-        for (auto y = 0; y < setting::FieldHeight; y++) {
+    // Create next figure background shadow
+    SDL_SetRenderDrawColor(renderer, 30, 10, 10, 30);
+    SDL_Rect nextFigBorderBg{
+            ScreenWidth / 2 + RECT_BORDER * 50,
+            FieldHeight + setting::FieldHeight + RECT_BORDER,
+            400,
+            300
+    };
+    SDL_RenderFillRect(renderer, &nextFigBorderBg);
+
+    // Create next figure background shadow
+    SDL_SetRenderDrawColor(renderer, 60, 10, 10, 30);
+    SDL_Rect nextFigBorder{
+            ScreenWidth / 2 + RECT_BORDER * 100,
+            FieldHeight + setting::FieldHeight + RECT_BORDER,
+            350,
+            250
+    };
+    SDL_RenderFillRect(renderer, &nextFigBorder);
+
+    // Render current figure
+    nextFigure_.cX_ = FieldWidth + 5;
+    nextFigure_.cY_ = 2;
+    nextFigure_.render(renderer);
+
+    // Draw game field and render falling figure
+    for (auto x = 0; x < FieldWidth; x++) {
+        for (auto y = 0; y < FieldHeight; y++) {
             if (boardMatrix_[x][y]) {
                 // TODO Get color form tetro
                 SDL_SetRenderDrawColor(renderer, 80, 80, 80, 128);
@@ -46,13 +75,13 @@ bool Board::isColliding(Figure &fig) {
             }
 
             // Check if figure collides with game board
-            int boardX = fig.getX() + x;
-            if (boardX < 0 || boardX >= setting::FieldWidth) {
+            int boardX = fig.cX_ + x;
+            if (boardX < 0 || boardX >= FieldWidth) {
                 return true;
             }
 
-            int boardY = fig.getY() + y;
-            if (boardY < 0 || boardY >= setting::FieldHeight) {
+            int boardY = fig.cY_ + y;
+            if (boardY < 0 || boardY >= FieldHeight) {
                 return true;
             }
 
@@ -66,20 +95,21 @@ bool Board::isColliding(Figure &fig) {
     return false;
 }
 
-void Board::collect(const Figure &fig) {
+void Board::handleStore(const Figure &fig) {
     // Fill figure to board matrix
     for (int x = 0; x < FIGURE_SIZE; x++) {
         for (int y = 0; y < FIGURE_SIZE; y++) {
             if (fig.isBlock(x, y)) {
-                boardMatrix_[fig.getX() + x][fig.getY() + y] = true;
+                boardMatrix_[fig.cX_ + x][fig.cY_ + y] = true;
             }
         }
     }
 
     unsigned int removedLines = 0;
 
+    // TODO Find bug related of deleting more than 1 line (if need remove 2, will be removed 1)
     // Check all lines
-    for (int line = setting::FieldHeight - 1; line >= 0; line--) {
+    for (int line = FieldHeight - 1; line >= 0; line--) {
         bool isSolidLine = true;
         for (auto &row : boardMatrix_) {
             if (!row[line]) {
@@ -114,4 +144,15 @@ unsigned int Board::getBoardScore() {
 
 unsigned int Board::getBoardLife() {
     return boardLife_;
+}
+
+void Board::setNextFigure(Figure next) {
+    nextFigure_ = next;
+}
+
+Figure Board::getNextFigure() {
+    nextFigure_.cX_ = FieldWidth / 2 - 2;
+    nextFigure_.cY_ = 0;
+
+    return nextFigure_;
 }

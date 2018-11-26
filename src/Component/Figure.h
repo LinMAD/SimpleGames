@@ -9,12 +9,6 @@ namespace component {
      * Figure represent a playable object
      */
     class Figure : public AbstractVisualObject {
-    private:
-        /**
-         * Current coordinates in axis
-         */
-        int cX_, cY_;
-
         /**
          * Current angele (how it's rotated max 360==0)
          */
@@ -25,7 +19,14 @@ namespace component {
          */
         FigureType type_;
     public:
+        /**
+         * Current coordinates in axis
+         */
+        int cX_, cY_;
+
         explicit Figure(FigureType type);
+
+        Figure();
 
         /**
          * Render figure
@@ -43,16 +44,6 @@ namespace component {
          * Handel rotation of figure
          */
         void rotate();
-
-        /**
-         * @return int of current coordinate axis
-         */
-        int getX() const;
-
-        /**
-         * @return int of current coordinate axis
-         */
-        int getY() const;
 
         /**
          * Checking is block exist on
