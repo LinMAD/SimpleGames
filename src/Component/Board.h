@@ -10,28 +10,40 @@ namespace component {
     /**
      * Board represent a game field
      * Contains game logic:
-     * Collision checks, figures collecting, line deliting
+     *  - Collision checks
+     *  - Figures collecting
+     *  - Removing the lines
+     *  - Scoring calculating
      */
     class Board : public AbstractVisualObject {
     private:
-        bool boardMatrix_[setting::FieldWidth][setting::FieldHeight];
+        // Board container to control stored piece
+        bool boardMatrix_[setting::FieldWidth][setting::FieldHeight]{};
+        // Board total score
         unsigned int boardScore_;
+        // Board life it's time life score modification, higher number, more points
+        unsigned int boardLife_ ;
 
         /**
          * Calculate score price for removed lines
-         * Formula:
-         * 80 * (removedLines + 1)
+         * Formula: 80 * (removedLines + boardLife_)
          *
          * @param removedLines of figures aka tetromino
          *
          * @return return int
          */
         void calculateScore(int removedLines) {
-            boardScore_ += static_cast<unsigned int>(80 * (removedLines + 1));
-        }
+            boardScore_ += (boardLife_ + 1) * 2;
 
+            if (removedLines != 0) {
+                boardScore_ += 80 * (removedLines + boardLife_);
+            }
+        }
     public:
-        Board();
+        Board() {
+            boardScore_ = 0;
+            boardLife_ = 1;
+        }
 
         /**
          * Provide game field
@@ -55,7 +67,12 @@ namespace component {
         /**
          * @return int current board score
          */
-        int getBoardScore();
+        unsigned int getBoardScore();
+
+        /**
+         * @return int how long board exist
+         */
+        unsigned int getBoardLife();
     };
 }
 

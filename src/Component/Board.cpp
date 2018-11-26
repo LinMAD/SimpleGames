@@ -3,8 +3,6 @@
 
 using namespace component;
 
-Board::Board() : boardMatrix_{{false}}, boardScore_(0) {}
-
 void Board::render(SDL_Renderer *renderer) {
     int figScale = getObjectScale();
 
@@ -104,11 +102,13 @@ void Board::collect(const Figure &fig) {
         }
     }
 
-    if (removedLines != 0) {
-        calculateScore(removedLines);
-    }
+    calculateScore(removedLines);
 }
 
-int Board::getBoardScore() {
+unsigned int Board::getBoardScore() {
     return boardScore_;
+}
+
+unsigned int Board::getBoardLife() {
+    return boardLife_;
 }

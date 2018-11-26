@@ -63,11 +63,11 @@ void engine::GameHandler::input() {
         return;
     }
 
-    if (event.type != SDL_KEYDOWN) {
+    if (event.type != SDL_KEYDOWN || isUserInputLocked_) {
         return;
     }
 
-    // TODO Lock keys if figure processing in game board, it's need be done to not mess figure place in cycle
+    // TODO Split Input to class, add pause if escape pressed
 
     switch (event.key.keysym.sym) {
         default:
@@ -109,21 +109,26 @@ void engine::GameHandler::input() {
 
 void engine::GameHandler::update() {
     // TODO Check if game ended
-
-    if (SDL_GetTicks() > gameSpeed_) {
-        gameSpeed_ += 1000; // TODO Game speed must be incremented
-        // Check if game still playable
-        Figure figureInFuture = currentFigure_;
-        figureInFuture.move(0, 1);
-        if (gameBoard_->isColliding(figureInFuture)) {
-            gameBoard_->collect(currentFigure_);
-            currentFigure_ = Figure{FigureType(
-                    generateRandom(FigureType::I, FigureType::Z))
-            };
-        } else {
-            currentFigure_ = figureInFuture;
-        }
+    if (SDL_GetTicks() < gameSpeed_) {
+        return;
     }
+
+    gameSpeed_ += 1000 * gameBoard_->getBoardLife() / 2;
+    isUserInputLocked_ = true;
+
+    // Check if game still playable
+    Figure figureInFuture = currentFigure_;
+    figureInFuture.move(0, 1);
+    if (gameBoard_->isColliding(figureInFuture)) {
+        gameBoard_->collect(currentFigure_);
+        currentFigure_ = Figure{FigureType(
+                generateRandom(FigureType::I, FigureType::Z))
+        };
+    } else {
+        currentFigure_ = figureInFuture;
+    }
+
+    isUserInputLocked_ = false;
 
     std::cout << "Game score: " << gameBoard_->getBoardScore() << std::endl;
 }
