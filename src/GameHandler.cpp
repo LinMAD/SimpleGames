@@ -110,7 +110,6 @@ void engine::GameHandler::input() {
 }
 
 void engine::GameHandler::update() {
-    // TODO Check if game ended
     // TODO Add better tick handling, some times games jumping
     if (SDL_GetTicks() < gameSpeed_) {
         return;
@@ -129,6 +128,12 @@ void engine::GameHandler::update() {
         currentFigure_ = Figure{FigureType(
                 generateRandom(FigureType::I, FigureType::Z))
         };
+
+        if (gameBoard_->isColliding(currentFigure_)) {
+            isGameOver_ = true;
+
+            return;
+        }
     } else {
         currentFigure_ = figureInFuture;
     }
