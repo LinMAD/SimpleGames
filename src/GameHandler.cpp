@@ -18,6 +18,8 @@ engine::GameHandler::GameHandler() :
         gameSpeed_(SDL_GetTicks()),
         currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))}) {
     gameBoard_ = new Board();
+
+    // TODO give next new figure to game board to be displayed
 }
 
 // De-constructor
@@ -109,6 +111,7 @@ void engine::GameHandler::input() {
 
 void engine::GameHandler::update() {
     // TODO Check if game ended
+    // TODO Add better tick handling, some times games jumping
     if (SDL_GetTicks() < gameSpeed_) {
         return;
     }
@@ -121,6 +124,8 @@ void engine::GameHandler::update() {
     figureInFuture.move(0, 1);
     if (gameBoard_->isColliding(figureInFuture)) {
         gameBoard_->collect(currentFigure_);
+
+        // TODO give new figure to game board to be displayed
         currentFigure_ = Figure{FigureType(
                 generateRandom(FigureType::I, FigureType::Z))
         };

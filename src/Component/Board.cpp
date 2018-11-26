@@ -6,6 +6,9 @@ using namespace component;
 void Board::render(SDL_Renderer *renderer) {
     int figScale = getObjectScale();
 
+    // TODO Add score on right screen
+    // TODO Add next generated figure
+
     for (auto x = 0; x < setting::FieldWidth; x++) {
         for (auto y = 0; y < setting::FieldHeight; y++) {
             if (boardMatrix_[x][y]) {
