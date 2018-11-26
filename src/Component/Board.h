@@ -10,14 +10,41 @@ namespace component {
     /**
      * Board represent a game field
      * Contains game logic:
-     * Collision checks, figures collecting, line deliting
+     *  - Collision checks
+     *  - Figures collecting
+     *  - Removing the lines
+     *  - Scoring calculating
      */
     class Board : public AbstractVisualObject {
     private:
-        // TODO Add game score
-        bool boardMatrix_[setting::FieldWidth][setting::FieldHeight];
+        // Board container to control stored piece
+        bool boardMatrix_[setting::FieldWidth][setting::FieldHeight]{};
+        // Board total score
+        unsigned int boardScore_;
+        // Board life it's time life score modification, higher number, more points
+        unsigned int boardLife_;
+
+        // Board will show next figure
+        Figure nextFigure_;
+
+        /**
+         * Calculate score price for removed lines
+         * Formula: 80 * (removedLines + boardLife_)
+         *
+         * @param removedLines of figures aka tetromino
+         *
+         * @return return int
+         */
+        void calculateScore(int removedLines) {
+            boardScore_ += (boardLife_ + 1) * 2;
+
+            if (removedLines != 0) {
+                boardScore_ += 80 * (removedLines + boardLife_);
+            }
+        }
+
     public:
-        Board();
+        explicit Board(Figure nextFigure);
 
         /**
          * Provide game field
@@ -36,7 +63,29 @@ namespace component {
         /**
          * Collect figure to board
          */
-        void collect(const Figure &fig);
+        void handleStore(const Figure &fig);
+
+        /**
+         * Show next type of figure
+         *
+         * @param type
+         */
+        void setNextFigure(Figure next);
+
+        /**
+         * @return pointer to next figure
+         */
+        Figure getNextFigure();
+
+        /**
+         * @return int current board score
+         */
+        unsigned int getBoardScore();
+
+        /**
+         * @return int how long board exist
+         */
+        unsigned int getBoardLife();
     };
 }
 

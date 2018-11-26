@@ -23,7 +23,6 @@ void Figure::render(SDL_Renderer *renderer) {
             if (!isBlock(x, y)) {
                 continue;
             }
-
             SDL_Rect rect{
                     (x + cX_) * figScale + RECT_BORDER,
                     (y + cY_) * figScale + RECT_BORDER,
@@ -44,14 +43,6 @@ void Figure::rotate() {
     // Make rotation 90*
     angle_ += 3;
     angle_ %= 4;
-}
-
-int Figure::getX() const {
-    return cX_;
-}
-
-int Figure::getY() const {
-    return cY_;
 }
 
 bool Figure::isBlock(int x, int y) const {

@@ -16,8 +16,9 @@ using namespace setting;
 // Constructor
 engine::GameHandler::GameHandler() :
         gameSpeed_(SDL_GetTicks()),
-        currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))}) {
-    gameBoard_ = new Board();
+        currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))})
+{
+    gameBoard_ = new Board(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
 }
 
 // De-constructor
@@ -63,9 +64,11 @@ void engine::GameHandler::input() {
         return;
     }
 
-    if (event.type != SDL_KEYDOWN) {
+    if (event.type != SDL_KEYDOWN || isUserInputLocked_) {
         return;
     }
+
+    // TODO Split Input to class, add pause if escape pressed
 
     switch (event.key.keysym.sym) {
         default:
@@ -106,22 +109,34 @@ void engine::GameHandler::input() {
 }
 
 void engine::GameHandler::update() {
-    // TODO Check if game ended
-
-    if (SDL_GetTicks() > gameSpeed_) {
-        gameSpeed_ += 1000; // TODO Game speed must be incremented
-        // Check if game still playable
-        Figure figureInFuture = currentFigure_;
-        figureInFuture.move(0, 1);
-        if (gameBoard_->isColliding(figureInFuture)) {
-            gameBoard_->collect(currentFigure_);
-            currentFigure_ = Figure{FigureType(
-                    generateRandom(FigureType::I, FigureType::Z))
-            };
-        } else {
-            currentFigure_ = figureInFuture;
-        }
+    if (SDL_GetTicks() < gameSpeed_) {
+        return;
     }
+
+    gameSpeed_ += 900 * gameBoard_->getBoardLife();
+    isUserInputLocked_ = true;
+
+    // Check if current falling figure must be stored
+    Figure figureInFuture = currentFigure_;
+    figureInFuture.move(0, 1);
+    if (!gameBoard_->isColliding(figureInFuture)) {
+        currentFigure_ = figureInFuture;
+        isUserInputLocked_ = false;
+
+        return;
+    }
+
+    // Store figure in game board and generate new if can
+    gameBoard_->handleStore(currentFigure_);
+
+    currentFigure_ = gameBoard_->getNextFigure();
+    if (gameBoard_->isColliding(currentFigure_)) {
+        isGameOver_ = true;
+        return;
+    }
+
+    gameBoard_->setNextFigure(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
+    isUserInputLocked_ = false;
 }
 
 void engine::GameHandler::render() {
