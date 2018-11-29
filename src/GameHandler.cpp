@@ -137,6 +137,8 @@ void engine::GameHandler::update() {
 
     gameBoard_->setNextFigure(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
     isUserInputLocked_ = false;
+
+    std::cout << "Game score: " << gameBoard_->getBoardScore() << std::endl;
 }
 
 void engine::GameHandler::render() {

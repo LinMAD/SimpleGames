@@ -115,7 +115,7 @@ void Board::handleStore(const Figure &fig) {
     // Clear all possible lines in matrix
     unsigned int removedLines = 0;
 
-    clearRow(&matrix_, removedLines);
+    clearAvailableLines(&matrix_, removedLines);
     calculateScore(removedLines);
 }
 
@@ -143,9 +143,10 @@ Figure Board::getNextFigure() {
  */
 
 
-void Board::clearRow(Matrix *matrix, unsigned int clearedCount) {
+void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
     for (int line = FieldHeight - 1; line >= 0; line--) {
         bool isSolidLine = true;
+
         for (auto &row : matrix->board_) {
             if (!row[line]) {
                 isSolidLine = false;
@@ -169,13 +170,14 @@ void Board::clearRow(Matrix *matrix, unsigned int clearedCount) {
             x[0] = false;
         }
 
-        clearRow(matrix, clearedCount);
+        clearAvailableLines(matrix, clearedCount);
     }
 }
 
-void Board::calculateScore(int removedLines) {
+void Board::calculateScore(unsigned int removedLines) {
     boardScore_ += (boardLife_ + 1) * 2;
 
+    // TODO Removed lines always 0
     if (removedLines != 0) {
         boardScore_ += 80 * (removedLines + boardLife_);
     }

@@ -28,7 +28,7 @@ namespace component {
         // Board life it's time life score modification, higher number, more points
         unsigned int boardLife_;
 
-        // Board container to control stored piece
+        // Matrix contains board container for locations
         Matrix matrix_;
 
         // Board will show next figure
@@ -42,7 +42,7 @@ namespace component {
          *
          * @return return int
          */
-        void calculateScore(int removedLines);
+        void calculateScore(unsigned int removedLines);
 
         /**
          * Clears filled figures in line
@@ -50,7 +50,7 @@ namespace component {
          * @param board
          * @param clearedCount
          */
-        void clearRow(Matrix *matrix, unsigned int clearedCount);
+        void clearAvailableLines(Matrix *matrix, unsigned int &clearedCount);
     public:
         explicit Board(Figure nextFigure);
 
