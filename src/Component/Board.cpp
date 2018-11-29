@@ -6,7 +6,13 @@
 using namespace component;
 using namespace setting;
 
-Board::Board(Figure nextFigure) : boardScore_(0),  boardLife_(1), nextFigure_(nextFigure) {}
+/**
+ * Public methods
+ */
+
+Board::Board(Figure nextFigure) :boardScore_(0),  boardLife_(1), nextFigure_(nextFigure) {
+    matrix_ = Matrix{};
+}
 
 void Board::render(SDL_Renderer *renderer) {
     int figScale = getObjectScale();
@@ -40,7 +46,7 @@ void Board::render(SDL_Renderer *renderer) {
     // Draw game field and render falling figure
     for (auto x = 0; x < FieldWidth; x++) {
         for (auto y = 0; y < FieldHeight; y++) {
-            if (boardMatrix_[x][y]) {
+            if (matrix_.board_[x][y]) {
                 // TODO Get color form tetro
                 SDL_SetRenderDrawColor(renderer, 80, 80, 80, 128);
                 SDL_Rect rect{
@@ -86,7 +92,7 @@ bool Board::isColliding(Figure &fig) {
             }
 
             // Check if future figure will collide with next in matrix
-            if (boardMatrix_[boardX][boardY]) {
+            if (matrix_.board_[boardX][boardY]) {
                 return true;
             }
         }
@@ -100,41 +106,16 @@ void Board::handleStore(const Figure &fig) {
     for (int x = 0; x < FIGURE_SIZE; x++) {
         for (int y = 0; y < FIGURE_SIZE; y++) {
             if (fig.isBlock(x, y)) {
-                boardMatrix_[fig.cX_ + x][fig.cY_ + y] = true;
+                matrix_.board_[fig.cX_ + x][fig.cY_ + y] = true;
             }
         }
     }
 
+
+    // Clear all possible lines in matrix
     unsigned int removedLines = 0;
 
-    // TODO Find bug related of deleting more than 1 line (if need remove 2, will be removed 1)
-    // Check all lines
-    for (int line = FieldHeight - 1; line >= 0; line--) {
-        bool isSolidLine = true;
-        for (auto &row : boardMatrix_) {
-            if (!row[line]) {
-                isSolidLine = false;
-
-                break;
-            }
-        }
-
-        if (!isSolidLine) {
-            continue;
-        }
-
-        removedLines++;
-        for (int y = line - 1; y >= 0; y--) {
-            for (auto &x : boardMatrix_) {
-                x[y + 1] = x[y];
-            }
-        }
-
-        for (auto &x : boardMatrix_) {
-            x[0] = false;
-        }
-    }
-
+    clearAvailableLines(&matrix_, removedLines);
     calculateScore(removedLines);
 }
 
@@ -155,4 +136,49 @@ Figure Board::getNextFigure() {
     nextFigure_.cY_ = 0;
 
     return nextFigure_;
+}
+
+/**
+ * Private methods
+ */
+
+
+void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
+    for (int line = FieldHeight - 1; line >= 0; line--) {
+        bool isSolidLine = true;
+
+        for (auto &row : matrix->board_) {
+            if (!row[line]) {
+                isSolidLine = false;
+
+                break;
+            }
+        }
+
+        if (!isSolidLine) {
+            continue;
+        }
+
+        clearedCount++;
+        for (int y = line - 1; y >= 0; y--) {
+            for (auto &x : matrix->board_) {
+                x[y + 1] = x[y];
+            }
+        }
+
+        for (auto &x : matrix->board_) {
+            x[0] = false;
+        }
+
+        clearAvailableLines(matrix, clearedCount);
+    }
+}
+
+void Board::calculateScore(unsigned int removedLines) {
+    boardScore_ += (boardLife_ + 1) * 2;
+
+    // TODO Removed lines always 0
+    if (removedLines != 0) {
+        boardScore_ += 80 * (removedLines + boardLife_);
+    }
 }

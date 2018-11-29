@@ -6,6 +6,12 @@
 #include "Component/Figure.h"
 
 namespace component {
+    /**
+     * Game matrix with allocated objects
+     */
+    struct Matrix {
+        bool board_[setting::FieldWidth][setting::FieldHeight]{};
+    };
 
     /**
      * Board represent a game field
@@ -17,12 +23,13 @@ namespace component {
      */
     class Board : public AbstractVisualObject {
     private:
-        // Board container to control stored piece
-        bool boardMatrix_[setting::FieldWidth][setting::FieldHeight]{};
         // Board total score
         unsigned int boardScore_;
         // Board life it's time life score modification, higher number, more points
         unsigned int boardLife_;
+
+        // Matrix contains board container for locations
+        Matrix matrix_;
 
         // Board will show next figure
         Figure nextFigure_;
@@ -35,14 +42,15 @@ namespace component {
          *
          * @return return int
          */
-        void calculateScore(int removedLines) {
-            boardScore_ += (boardLife_ + 1) * 2;
+        void calculateScore(unsigned int removedLines);
 
-            if (removedLines != 0) {
-                boardScore_ += 80 * (removedLines + boardLife_);
-            }
-        }
-
+        /**
+         * Clears filled figures in line
+         *
+         * @param board
+         * @param clearedCount
+         */
+        void clearAvailableLines(Matrix *matrix, unsigned int &clearedCount);
     public:
         explicit Board(Figure nextFigure);
 
