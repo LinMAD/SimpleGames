@@ -1,3 +1,9 @@
+# Conan files
+conanbuildinfo.cmake
+conanbuildinfo.txt
+conaninfo.txt
+
+
 #IDE
 .idea/
 
@@ -5,6 +11,7 @@
 CMakeFiles
 CMakeCache.txt
 cmake-build-debug
+cmake-build-release
 cmake_install.cmake
 Makefile
 
