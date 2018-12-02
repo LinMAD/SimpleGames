@@ -26,8 +26,6 @@ namespace component {
 
         explicit Figure(FigureType type);
 
-        Figure();
-
         /**
          * Render figure
          */

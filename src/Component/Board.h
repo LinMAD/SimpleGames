@@ -2,7 +2,6 @@
 #define SOVIETTETRIS_BOARD_H
 
 #include "Setting/Properties.h"
-#include "Component/AbstractVisualObject.h"
 #include "Component/Figure.h"
 
 namespace component {

@@ -3,13 +3,15 @@ project(SovietTetris)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(SDL2 REQUIRED)
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup()
+else()
+    message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
+endif()
 
-include_directories(
-        ${SDL2_INCLUDE_DIRS}
-        "${CMAKE_CURRENT_SOURCE_DIR}/src"
-)
+set(SOURCE_FILES main.cpp)
+add_executable(SovietTetris ${SOURCE_FILES})
 
-add_executable(SovietTetris main.cpp)
-
-target_link_libraries(SovietTetris ${SDL2_LIBRARIES})
+target_link_libraries(SovietTetris ${CONAN_LIBS})
