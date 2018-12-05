@@ -1,8 +1,9 @@
 #ifndef SOVIETTETRIS_FIGURE_H
 #define SOVIETTETRIS_FIGURE_H
 
+#include <Model/Color.h>
 #include "AbstractVisualObject.h"
-#include "FigureType.h"
+#include "Model/FigureType.h"
 
 namespace component {
     /**
@@ -17,19 +18,29 @@ namespace component {
         /**
          * Type of piece
          */
-        FigureType type_;
+        model::FigureType type_;
+
+        /**
+         * Color of piece
+         */
+        model::Color color_;
     public:
         /**
          * Current coordinates in axis
          */
         int cX_, cY_;
 
-        explicit Figure(FigureType type);
+        explicit Figure(model::FigureType type);
 
         /**
          * Render figure
          */
         void render(SDL_Renderer *renderer) override;
+
+        /**
+         * @return color of current figure
+         */
+        model::Color getFigureColor();
 
         /**
          * Handle movement on next coordinates

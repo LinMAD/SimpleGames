@@ -2,9 +2,10 @@
 #include "GameHandler.h"
 #include "Util/Generator.h"
 #include "Setting/Properties.h"
-#include "Component/FigureType.h"
+#include "Model/FigureType.h"
 #include "Component/Figure.cpp"
 #include "Component/Board.cpp"
+#include "Input.cpp"
 
 using namespace util;
 using namespace setting;
@@ -16,8 +17,7 @@ using namespace setting;
 // Constructor
 engine::GameHandler::GameHandler() :
         gameSpeed_(SDL_GetTicks()),
-        currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))})
-{
+        currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))}) {
     gameBoard_ = new Board(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
 }
 
@@ -52,59 +52,18 @@ void engine::GameHandler::init() {
 }
 
 void engine::GameHandler::input() {
-    SDL_Event event;
+    Figure figureInFuture = currentFigure_;
 
-    if (!SDL_WaitEventTimeout(&event, 250)) {
-        return;
-    }
-
-    if (event.type == SDL_QUIT) {
+    try {
+        engine::Input::handle(&figureInFuture);
+    } catch (std::runtime_error &e) {
         isGameOver_ = true;
 
         return;
     }
 
-    if (event.type != SDL_KEYDOWN || isUserInputLocked_) {
-        return;
-    }
-
-    // TODO Split Input to class, add pause if escape pressed
-
-    switch (event.key.keysym.sym) {
-        default:
-            break;
-        case SDLK_DOWN: {
-            Figure figureInFuture = currentFigure_;
-            figureInFuture.move(0, 1);
-            if (!gameBoard_->isColliding(figureInFuture)) {
-                currentFigure_ = figureInFuture;
-            }
-        }
-            break;
-        case SDLK_RIGHT: {
-            Figure figureInFuture = currentFigure_;
-            figureInFuture.move(1, 0);
-            if (!gameBoard_->isColliding(figureInFuture)) {
-                currentFigure_ = figureInFuture;
-            }
-        }
-            break;
-        case SDLK_LEFT: {
-            Figure figureInFuture = currentFigure_;
-            figureInFuture.move(-1, 0);
-            if (!gameBoard_->isColliding(figureInFuture)) {
-                currentFigure_ = figureInFuture;
-            }
-        }
-            break;
-        case SDLK_UP: {
-            Figure figureInFuture = currentFigure_;
-            figureInFuture.rotate();
-            if (!gameBoard_->isColliding(figureInFuture)) {
-                currentFigure_ = figureInFuture;
-            }
-        }
-            break;
+    if (!gameBoard_->isColliding(figureInFuture)) {
+        currentFigure_ = figureInFuture;
     }
 }
 
@@ -114,14 +73,12 @@ void engine::GameHandler::update() {
     }
 
     gameSpeed_ += 900 * gameBoard_->getBoardLife();
-    isUserInputLocked_ = true;
 
     // Check if current falling figure must be stored
     Figure figureInFuture = currentFigure_;
     figureInFuture.move(0, 1);
     if (!gameBoard_->isColliding(figureInFuture)) {
         currentFigure_ = figureInFuture;
-        isUserInputLocked_ = false;
 
         return;
     }
@@ -136,7 +93,6 @@ void engine::GameHandler::update() {
     }
 
     gameBoard_->setNextFigure(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
-    isUserInputLocked_ = false;
 
     std::cout << "Game score: " << gameBoard_->getBoardScore() << std::endl;
 }
@@ -150,6 +106,3 @@ void engine::GameHandler::render() {
 
     SDL_RenderPresent(sdlRenderer_);
 }
-
-
-

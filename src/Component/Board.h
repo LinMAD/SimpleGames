@@ -50,6 +50,7 @@ namespace component {
          * @param clearedCount
          */
         void clearAvailableLines(Matrix *matrix, unsigned int &clearedCount);
+
     public:
         explicit Board(Figure nextFigure);
 

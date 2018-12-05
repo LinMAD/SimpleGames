@@ -9,7 +9,7 @@ using namespace setting;
  * Public methods
  */
 
-Board::Board(Figure nextFigure) :boardScore_(0),  boardLife_(1), nextFigure_(nextFigure) {
+Board::Board(Figure nextFigure) : boardScore_(0), boardLife_(1), nextFigure_(nextFigure) {
     matrix_ = Matrix{};
 }
 
@@ -46,8 +46,7 @@ void Board::render(SDL_Renderer *renderer) {
     for (auto x = 0; x < FieldWidth; x++) {
         for (auto y = 0; y < FieldHeight; y++) {
             if (matrix_.board_[x][y]) {
-                // TODO Get color form tetro
-                SDL_SetRenderDrawColor(renderer, 80, 80, 80, 128);
+                SDL_SetRenderDrawColor(renderer, 150, 150, 150, 128);
                 SDL_Rect rect{
                         x * figScale + RECT_BORDER,
                         y * figScale + RECT_BORDER,
@@ -73,8 +72,8 @@ void Board::render(SDL_Renderer *renderer) {
 }
 
 bool Board::isColliding(Figure &fig) {
-    for (int x = 0; x < FIGURE_SIZE; x++) {
-        for (int y = 0; y < FIGURE_SIZE; y++) {
+    for (int x = 0; x < model::FIGURE_SIZE; x++) {
+        for (int y = 0; y < model::FIGURE_SIZE; y++) {
             if (!fig.isBlock(x, y)) {
                 continue;
             }
@@ -102,8 +101,8 @@ bool Board::isColliding(Figure &fig) {
 
 void Board::handleStore(const Figure &fig) {
     // Fill figure to board matrix
-    for (int x = 0; x < FIGURE_SIZE; x++) {
-        for (int y = 0; y < FIGURE_SIZE; y++) {
+    for (int x = 0; x < model::FIGURE_SIZE; x++) {
+        for (int y = 0; y < model::FIGURE_SIZE; y++) {
             if (fig.isBlock(x, y)) {
                 matrix_.board_[fig.cX_ + x][fig.cY_ + y] = true;
             }
@@ -176,7 +175,6 @@ void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
 void Board::calculateScore(unsigned int removedLines) {
     boardScore_ += (boardLife_ + 1) * 2;
 
-    // TODO Removed lines always 0
     if (removedLines != 0) {
         boardScore_ += 80 * (removedLines + boardLife_);
     }
