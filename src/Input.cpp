@@ -1,17 +1,16 @@
+#include <iostream>
 #include "Input.h"
-
-bool engine::Input::isQuit() {
-    SDL_Event event;
-
-    if (!SDL_WaitEventTimeout(&event, engine::Input::EVENT_TIMEOUT)) {
-        return false;
-    }
-
-    return event.type == SDL_QUIT;
-}
 
 void engine::Input::handle(component::Figure *fig) {
     SDL_Event event;
+
+    if (!SDL_WaitEventTimeout(&event, engine::Input::EVENT_TIMEOUT)) {
+        return;
+    }
+
+    if (event.type == SDL_QUIT) {
+        throw std::runtime_error("Quit game");
+    }
 
     if (event.type != SDL_KEYDOWN) {
         return;

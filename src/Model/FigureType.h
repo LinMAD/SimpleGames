@@ -1,7 +1,7 @@
 #ifndef SOVIETTETRIS_FIGURETYPE_H
 #define SOVIETTETRIS_FIGURETYPE_H
 
-namespace component {
+namespace model {
     const int FIGURE_SIZE = 4;
 
     // All types of figures
@@ -10,7 +10,7 @@ namespace component {
     };
 
     // All figures sprites
-    static const char *FigureSprite[][4] = {
+    static const char *FigureSprite[][model::FIGURE_SIZE] = {
             {
                     " *  "
                     " *  "

@@ -2,7 +2,7 @@
 #include "GameHandler.h"
 #include "Util/Generator.h"
 #include "Setting/Properties.h"
-#include "Component/FigureType.h"
+#include "Model/FigureType.h"
 #include "Component/Figure.cpp"
 #include "Component/Board.cpp"
 #include "Input.cpp"
@@ -52,15 +52,15 @@ void engine::GameHandler::init() {
 }
 
 void engine::GameHandler::input() {
-    if (engine::Input::isQuit()) {
+    Figure figureInFuture = currentFigure_;
+
+    try {
+        engine::Input::handle(&figureInFuture);
+    } catch (std::runtime_error &e) {
         isGameOver_ = true;
 
         return;
     }
-
-    Figure figureInFuture = currentFigure_;
-
-    engine::Input::handle(&figureInFuture);
 
     if (!gameBoard_->isColliding(figureInFuture)) {
         currentFigure_ = figureInFuture;

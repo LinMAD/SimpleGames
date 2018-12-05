@@ -14,11 +14,6 @@ namespace engine {
         static const int EVENT_TIMEOUT = 250;
     public:
         /**
-         * @return bool is user quit
-         */
-        static bool isQuit();
-
-        /**
          * @param fig
          */
         static void handle(component::Figure *fig);
