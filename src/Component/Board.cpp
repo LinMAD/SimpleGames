@@ -176,7 +176,6 @@ void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
 void Board::calculateScore(unsigned int removedLines) {
     boardScore_ += (boardLife_ + 1) * 2;
 
-    // TODO Removed lines always 0
     if (removedLines != 0) {
         boardScore_ += 80 * (removedLines + boardLife_);
     }

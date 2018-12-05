@@ -14,6 +14,9 @@ Project:
 └────────── Util         // Utilities, like random generator
 ```
 
+##### Issues
+In moment when I wrote that coded I didn't find way to fix SDL2_ttf to draw score board.
+
 ### Development
 To prepare project use script: `conan.sh` to setup remote and install dependencies.
 Fresh example:
@@ -21,7 +24,7 @@ Fresh example:
     ./conan.sh add_remote
     ./conan.sh debug
     // Or if you want
-     ./conan.sh release 
+    ./conan.sh release 
 ```
 
 And then you can build project.

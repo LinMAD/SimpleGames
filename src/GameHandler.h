@@ -20,7 +20,6 @@ namespace engine {
 
         Uint32 gameSpeed_;
         bool isGameOver_ = false;
-        bool isUserInputLocked_ = false;
     public:
         GameHandler();
 
