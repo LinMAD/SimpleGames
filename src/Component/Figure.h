@@ -1,7 +1,6 @@
 #ifndef SOVIETTETRIS_FIGURE_H
 #define SOVIETTETRIS_FIGURE_H
 
-#include <Model/Color.h>
 #include "AbstractVisualObject.h"
 #include "Model/FigureType.h"
 
@@ -34,6 +33,7 @@ namespace component {
 
         /**
          * Render figure
+         * @param renderer
          */
         void render(SDL_Renderer *renderer) override;
 

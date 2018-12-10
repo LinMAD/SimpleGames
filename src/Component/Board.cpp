@@ -1,9 +1,12 @@
 #include <utility>
 #include <iostream>
 #include "Board.h"
+#include "Model/NumberType.h"
 
+using namespace std;
 using namespace component;
 using namespace setting;
+using namespace model;
 
 /**
  * Public methods
@@ -14,78 +17,51 @@ Board::Board(Figure nextFigure) : boardScore_(0), boardLife_(1), nextFigure_(nex
 }
 
 void Board::render(SDL_Renderer *renderer) {
-    int figScale = getObjectScale();
-    // TODO Add score on right screen
-
     // Create next figure background shadow
-    SDL_SetRenderDrawColor(renderer, 30, 10, 10, 30);
-    SDL_Rect nextFigBorderBg{
-            ScreenWidth / 2 + RECT_BORDER * 50,
-            FieldHeight + setting::FieldHeight + RECT_BORDER,
-            400,
-            300
-    };
-    SDL_RenderFillRect(renderer, &nextFigBorderBg);
-
-    // Create next figure background shadow
-    SDL_SetRenderDrawColor(renderer, 60, 10, 10, 30);
-    SDL_Rect nextFigBorder{
-            ScreenWidth / 2 + RECT_BORDER * 100,
-            FieldHeight + setting::FieldHeight + RECT_BORDER,
-            350,
-            250
-    };
-    SDL_RenderFillRect(renderer, &nextFigBorder);
+    drawRectangle(renderer, Color{50, 50, 50, 128}, HalfScreen + RECT_BORDER, 0, HalfScreen, ScreenWidth);
 
     // Render current figure
-    nextFigure_.cX_ = FieldWidth + 5;
-    nextFigure_.cY_ = 2;
+    nextFigure_.cX_ = MaxFieldX + 4;
+    nextFigure_.cY_ = 15;
     nextFigure_.render(renderer);
 
     // Draw game field and render falling figure
-    for (auto x = 0; x < FieldWidth; x++) {
-        for (auto y = 0; y < FieldHeight; y++) {
+    for (auto x = 0; x < MaxFieldX; x++) {
+        for (auto y = 0; y < MaxFieldY; y++) {
+            Color *gameBoardCellColor;
             if (matrix_.board_[x][y]) {
-                SDL_SetRenderDrawColor(renderer, 150, 150, 150, 128);
-                SDL_Rect rect{
-                        x * figScale + RECT_BORDER,
-                        y * figScale + RECT_BORDER,
-                        figScale - RECT_BORDER,
-                        figScale - RECT_BORDER
-                };
-                SDL_RenderFillRect(renderer, &rect);
-
-                continue;
+                gameBoardCellColor = new Color{150, 150, 150, 128};
+            } else {
+                gameBoardCellColor = new Color{30, 30, 30, 128};
             }
 
-            // TODO Move rect creation to abstract class
-            SDL_SetRenderDrawColor(renderer, 30, 30, 30, 128);
-            SDL_Rect rect{
-                    x * figScale + RECT_BORDER,
-                    y * figScale + RECT_BORDER,
-                    figScale - RECT_BORDER,
-                    figScale - RECT_BORDER
-            };
-            SDL_RenderFillRect(renderer, &rect);
+            drawRectangle(
+                    renderer,
+                    *gameBoardCellColor,
+                    x * getObjectScale() + RECT_BORDER,
+                    y * getObjectScale() + RECT_BORDER,
+                    getObjectScale() - RECT_BORDER,
+                    getObjectScale() - RECT_BORDER
+            );
         }
     }
 }
 
 bool Board::isColliding(Figure &fig) {
-    for (int x = 0; x < model::FIGURE_SIZE; x++) {
-        for (int y = 0; y < model::FIGURE_SIZE; y++) {
+    for (int x = 0; x < FIGURE_SIZE; x++) {
+        for (int y = 0; y < FIGURE_SIZE; y++) {
             if (!fig.isBlock(x, y)) {
                 continue;
             }
 
             // Check if figure collides with game board
             int boardX = fig.cX_ + x;
-            if (boardX < 0 || boardX >= FieldWidth) {
+            if (boardX < 0 || boardX >= MaxFieldX) {
                 return true;
             }
 
             int boardY = fig.cY_ + y;
-            if (boardY < 0 || boardY >= FieldHeight) {
+            if (boardY < 0 || boardY >= MaxFieldY) {
                 return true;
             }
 
@@ -101,8 +77,8 @@ bool Board::isColliding(Figure &fig) {
 
 void Board::handleStore(const Figure &fig) {
     // Fill figure to board matrix
-    for (int x = 0; x < model::FIGURE_SIZE; x++) {
-        for (int y = 0; y < model::FIGURE_SIZE; y++) {
+    for (int x = 0; x < FIGURE_SIZE; x++) {
+        for (int y = 0; y < FIGURE_SIZE; y++) {
             if (fig.isBlock(x, y)) {
                 matrix_.board_[fig.cX_ + x][fig.cY_ + y] = true;
             }
@@ -130,7 +106,7 @@ void Board::setNextFigure(Figure next) {
 }
 
 Figure Board::getNextFigure() {
-    nextFigure_.cX_ = FieldWidth / 2 - 2;
+    nextFigure_.cX_ = (MaxFieldX >> 1) - 2;
     nextFigure_.cY_ = 0;
 
     return nextFigure_;
@@ -142,7 +118,7 @@ Figure Board::getNextFigure() {
 
 
 void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
-    for (int line = FieldHeight - 1; line >= 0; line--) {
+    for (int line = MaxFieldY - 1; line >= 0; line--) {
         bool isSolidLine = true;
 
         for (auto &row : matrix->board_) {
@@ -170,10 +146,12 @@ void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
 
         clearAvailableLines(matrix, clearedCount);
     }
+
+    boardLife_++;
 }
 
 void Board::calculateScore(unsigned int removedLines) {
-    boardScore_ += (boardLife_ + 1) * 2;
+    boardScore_ += (boardLife_ + 1) << 1;
 
     if (removedLines != 0) {
         boardScore_ += 80 * (removedLines + boardLife_);

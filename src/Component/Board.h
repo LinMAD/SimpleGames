@@ -9,7 +9,7 @@ namespace component {
      * Game matrix with allocated objects
      */
     struct Matrix {
-        bool board_[setting::FieldWidth][setting::FieldHeight]{};
+        bool board_[setting::MaxFieldX][setting::MaxFieldY]{};
     };
 
     /**
@@ -55,7 +55,7 @@ namespace component {
         explicit Board(Figure nextFigure);
 
         /**
-         * Provide game field
+         * Render game field
          * @param renderer
          */
         void render(SDL_Renderer *renderer) override;

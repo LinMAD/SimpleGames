@@ -1,21 +1,6 @@
-#### Soviet tetris with SDL2
+#### SimpleTetris with SDL2
 
-`Status`: In development...
-
-![](assets/v01.png)
-
-Project:
-```text
-├── main
-│   └── src
-│       ├── GameHandler  // Contains game loop (input, update, draw)
-│       ├── Component    // Game components  
-│       └── Setting      // General game enums settings
-└────────── Util         // Utilities, like random generator
-```
-
-##### Issues
-In moment when I wrote that coded I didn't find way to fix SDL2_ttf to draw score board.
+![](assets/v02.png)
 
 ### Development
 To prepare project use script: `conan.sh` to setup remote and install dependencies.
@@ -26,8 +11,16 @@ Fresh example:
     // Or if you want
     ./conan.sh release 
 ```
-
-And then you can build project.
+And then you can build project:
+```text
+├── main
+│   └── src
+│       ├── GameHandler  // Contains game loop (input, update, draw)
+│       ├── Model        // Contains drawable game object
+│       ├── Component    // Game components  
+│       └── Setting      // General game enums settings
+└────────── Util         // Utilities, like random generator
+```
 
 #### Inspiration and ideas
  - [Tetris on wiki](https://en.wikipedia.org/wiki/Tetris)

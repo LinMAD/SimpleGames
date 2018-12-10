@@ -3,10 +3,10 @@
 
 namespace setting {
     enum Screen {
-        ScreenWidth = 800, ScreenHeight = 800
+        ScreenWidth = 800, ScreenHeight = 800, HalfScreen = 400
     };
     enum GameField {
-        FieldWidth = 10, FieldHeight = 20
+        MaxFieldX = 10, MaxFieldY = 20
     };
 }
 

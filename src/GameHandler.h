@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include "Component/Figure.h"
 #include "Component/Board.h"
+#include "Component/Score.h"
 
 namespace engine {
     /**
@@ -17,6 +18,7 @@ namespace engine {
 
         component::Figure currentFigure_;
         component::Board *gameBoard_;
+        component::Score *gameScore;
 
         Uint32 gameSpeed_;
         bool isGameOver_ = false;
