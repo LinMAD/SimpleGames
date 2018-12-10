@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_NUMBERTYPE_H
-#define SOVIETTETRIS_NUMBERTYPE_H
+#ifndef SIMPLETETRIS_NUMBERTYPE_H
+#define SIMPLETETRIS_NUMBERTYPE_H
 
 namespace model {
     const int NUMBER_SIZE = 4;
@@ -58,4 +58,4 @@ namespace model {
     };
 };
 
-#endif //SOVIETTETRIS_NUMBERTYPE_H
+#endif //SIMPLETETRIS_NUMBERTYPE_H

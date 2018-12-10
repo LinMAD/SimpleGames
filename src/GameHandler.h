@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_GAMEHANDLER_H
-#define SOVIETTETRIS_GAMEHANDLER_H
+#ifndef SIMPLETETRIS_GAMEHANDLER_H
+#define SIMPLETETRIS_GAMEHANDLER_H
 
 #include <random>
 #include <SDL2/SDL.h>
@@ -58,4 +58,4 @@ namespace engine {
 };
 
 
-#endif //SOVIETTETRIS_GAMEHANDLER_H
+#endif //SIMPLETETRIS_GAMEHANDLER_H

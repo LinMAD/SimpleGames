@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_FIGURE_H
-#define SOVIETTETRIS_FIGURE_H
+#ifndef SIMPLETETRIS_FIGURE_H
+#define SIMPLETETRIS_FIGURE_H
 
 #include "AbstractVisualObject.h"
 #include "Model/FigureType.h"
@@ -66,4 +66,4 @@ namespace component {
     };
 }
 
-#endif //SOVIETTETRIS_FIGURE_H
+#endif //SIMPLETETRIS_FIGURE_H
