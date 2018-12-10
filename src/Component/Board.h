@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_BOARD_H
-#define SOVIETTETRIS_BOARD_H
+#ifndef SIMPLETETRIS_BOARD_H
+#define SIMPLETETRIS_BOARD_H
 
 #include "Setting/Properties.h"
 #include "Component/Figure.h"
@@ -97,4 +97,4 @@ namespace component {
     };
 }
 
-#endif //SOVIETTETRIS_BOARD_H
+#endif //SIMPLETETRIS_BOARD_H

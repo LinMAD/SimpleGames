@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_GENERATOR_H
-#define SOVIETTETRIS_GENERATOR_H
+#ifndef SIMPLETETRIS_GENERATOR_H
+#define SIMPLETETRIS_GENERATOR_H
 
 #include <random>
 
@@ -21,4 +21,4 @@ namespace util {
     }
 }
 
-#endif //SOVIETTETRIS_GENERATOR_H
+#endif //SIMPLETETRIS_GENERATOR_H

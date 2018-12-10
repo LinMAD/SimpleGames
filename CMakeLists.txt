@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(SovietTetris)
+project(SimpleTetris)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -12,6 +12,6 @@ else()
 endif()
 
 set(SOURCE_FILES main.cpp)
-add_executable(SovietTetris ${SOURCE_FILES})
+add_executable(SimpleTetris ${SOURCE_FILES})
 
-target_link_libraries(SovietTetris ${CONAN_LIBS})
+target_link_libraries(SimpleTetris ${CONAN_LIBS})

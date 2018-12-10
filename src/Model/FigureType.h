@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_FIGURETYPE_H
-#define SOVIETTETRIS_FIGURETYPE_H
+#ifndef SIMPLETETRIS_FIGURETYPE_H
+#define SIMPLETETRIS_FIGURETYPE_H
 
 namespace model {
     const int FIGURE_SIZE = 4;
@@ -140,4 +140,4 @@ namespace model {
     };
 }
 
-#endif //SOVIETTETRIS_FIGURETYPE_H
+#endif //SIMPLETETRIS_FIGURETYPE_H

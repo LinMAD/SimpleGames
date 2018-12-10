@@ -37,7 +37,7 @@ void engine::GameHandler::init() {
     }
 
     sdlWindow_ = SDL_CreateWindow(
-            "SovietTetris",
+            WINDOW_NAME,
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
             ScreenWidth,

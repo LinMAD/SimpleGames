@@ -1,7 +1,7 @@
 #include <SDL2/SDL_types.h>
 
-#ifndef SOVIETTETRIS_COLOR_H
-#define SOVIETTETRIS_COLOR_H
+#ifndef SIMPLETETRIS_COLOR_H
+#define SIMPLETETRIS_COLOR_H
 
 namespace model {
 
@@ -16,4 +16,4 @@ namespace model {
     };
 }
 
-#endif //SOVIETTETRIS_COLOR_H
+#endif //SIMPLETETRIS_COLOR_H

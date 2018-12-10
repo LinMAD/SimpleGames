@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_SCORE_H
-#define SOVIETTETRIS_SCORE_H
+#ifndef SIMPLETETRIS_SCORE_H
+#define SIMPLETETRIS_SCORE_H
 
 #include <iostream>
 #include "AbstractVisualObject.h"
@@ -42,4 +42,4 @@ namespace component {
     };
 }
 
-#endif //SOVIETTETRIS_SCORE_H
+#endif //SIMPLETETRIS_SCORE_H

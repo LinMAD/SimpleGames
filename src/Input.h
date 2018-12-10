@@ -1,5 +1,5 @@
-#ifndef SOVIETTETRIS_INPUT_H
-#define SOVIETTETRIS_INPUT_H
+#ifndef SIMPLETETRIS_INPUT_H
+#define SIMPLETETRIS_INPUT_H
 
 #include <SDL2/SDL.h>
 #include "Component/Figure.h"
@@ -20,4 +20,4 @@ namespace engine {
     };
 }
 
-#endif //SOVIETTETRIS_INPUT_H
+#endif //SIMPLETETRIS_INPUT_H
