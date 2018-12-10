@@ -1,7 +1,6 @@
 #ifndef SOVIETTETRIS_FIGURE_H
 #define SOVIETTETRIS_FIGURE_H
 
-#include <Model/Color.h>
 #include "AbstractVisualObject.h"
 #include "Model/FigureType.h"
 

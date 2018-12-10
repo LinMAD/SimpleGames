@@ -10,7 +10,7 @@ using namespace model;
 
 // constructor
 Figure::Figure(FigureType type) :
-        type_(type), cX_(FieldWidth / 2 - 2), cY_(0), angle_(0) {
+        type_(type), cX_(MaxFieldX / 2 - 2), cY_(0), angle_(0) {
 
     switch (type_) {
         case FigureType::I:
@@ -45,18 +45,20 @@ void Figure::render(SDL_Renderer *renderer) {
 
     int figScale = getObjectScale();
     // Generate figure in 4 slices
-    for (auto x = 0; x < 4; x++) {
-        for (auto y = 0; y < 4; y++) {
+    for (auto x = 0; x < FIGURE_SIZE; x++) {
+        for (auto y = 0; y < FIGURE_SIZE; y++) {
             if (!isBlock(x, y)) {
                 continue;
             }
-            SDL_Rect rect{
+
+            drawRectangle(
+                    renderer,
+                    color_,
                     (x + cX_) * figScale + RECT_BORDER,
                     (y + cY_) * figScale + RECT_BORDER,
                     figScale - RECT_BORDER,
                     figScale - RECT_BORDER
-            };
-            SDL_RenderFillRect(renderer, &rect);
+            );
         }
     }
 }
@@ -73,7 +75,7 @@ void Figure::rotate() {
 }
 
 bool Figure::isBlock(int x, int y) const {
-    return FigureSprite[type_][angle_][x + y * 4] == '*';
+    return FigureSprite[type_][angle_][x + y * FIGURE_SIZE] == '*';
 }
 
 model::Color Figure::getFigureColor() {

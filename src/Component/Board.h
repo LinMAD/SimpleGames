@@ -9,7 +9,7 @@ namespace component {
      * Game matrix with allocated objects
      */
     struct Matrix {
-        bool board_[setting::FieldWidth][setting::FieldHeight]{};
+        bool board_[setting::MaxFieldX][setting::MaxFieldY]{};
     };
 
     /**

@@ -72,7 +72,9 @@ void engine::GameHandler::update() {
         return;
     }
 
-    gameSpeed_ += 900 * gameBoard_->getBoardLife();
+    gameSpeed_ += 500;
+    std::cout << "SDL tick: " << SDL_GetTicks() << std::endl;
+    std::cout << "Game speed: " << gameSpeed_ << std::endl;
 
     // Check if current falling figure must be stored
     Figure figureInFuture = currentFigure_;

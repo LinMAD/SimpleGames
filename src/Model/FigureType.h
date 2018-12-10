@@ -9,7 +9,7 @@ namespace model {
         I, J, L, O, S, T, Z
     };
 
-    // All figures sprites
+    // FigureSprite stores all variations of figures
     static const char *FigureSprite[][model::FIGURE_SIZE] = {
             {
                     " *  "
