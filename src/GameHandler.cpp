@@ -1,10 +1,12 @@
 #include <iostream>
+#include <string>
 #include "GameHandler.h"
 #include "Util/Generator.h"
 #include "Setting/Properties.h"
 #include "Model/FigureType.h"
 #include "Component/Figure.cpp"
 #include "Component/Board.cpp"
+#include "Component/Score.cpp"
 #include "Input.cpp"
 
 using namespace util;
@@ -19,6 +21,7 @@ engine::GameHandler::GameHandler() :
         gameSpeed_(SDL_GetTicks()),
         currentFigure_(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))}) {
     gameBoard_ = new Board(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
+    gameScore = new Score("0");
 }
 
 // De-constructor
@@ -72,9 +75,7 @@ void engine::GameHandler::update() {
         return;
     }
 
-    gameSpeed_ += 500;
-    std::cout << "SDL tick: " << SDL_GetTicks() << std::endl;
-    std::cout << "Game speed: " << gameSpeed_ << std::endl;
+    gameSpeed_ += 500 - (gameBoard_->getBoardLife() << 1);
 
     // Check if current falling figure must be stored
     Figure figureInFuture = currentFigure_;
@@ -95,8 +96,6 @@ void engine::GameHandler::update() {
     }
 
     gameBoard_->setNextFigure(Figure{FigureType(generateRandom(FigureType::I, FigureType::Z))});
-
-    std::cout << "Game score: " << gameBoard_->getBoardScore() << std::endl;
 }
 
 void engine::GameHandler::render() {
@@ -104,6 +103,8 @@ void engine::GameHandler::render() {
     SDL_RenderClear(sdlRenderer_);
 
     gameBoard_->render(sdlRenderer_);
+    gameScore->score_ = std::to_string(gameBoard_->getBoardScore());
+    gameScore->render(sdlRenderer_);
     currentFigure_.render(sdlRenderer_);
 
     SDL_RenderPresent(sdlRenderer_);

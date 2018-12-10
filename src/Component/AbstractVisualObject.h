@@ -39,11 +39,11 @@ namespace component {
          */
         virtual void render(SDL_Renderer *renderer) = 0;
 
-        /**
+        virtual /**
          * @return int scaling based on screen
          */
         int getObjectScale() {
-            return setting::ScreenWidth / 2 / 10;
+            return setting::HalfScreen / 10;
         }
     };
 }

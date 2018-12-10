@@ -10,7 +10,7 @@ using namespace model;
 
 // constructor
 Figure::Figure(FigureType type) :
-        type_(type), cX_(MaxFieldX / 2 - 2), cY_(0), angle_(0) {
+        type_(type), cX_((MaxFieldX >> 1) - 2), cY_(0), angle_(0) {
 
     switch (type_) {
         case FigureType::I:
@@ -41,9 +41,8 @@ Figure::Figure(FigureType type) :
 }
 
 void Figure::render(SDL_Renderer *renderer) {
-    SDL_SetRenderDrawColor(renderer, color_.red, color_.green, color_.blue, 100);
-
     int figScale = getObjectScale();
+
     // Generate figure in 4 slices
     for (auto x = 0; x < FIGURE_SIZE; x++) {
         for (auto y = 0; y < FIGURE_SIZE; y++) {

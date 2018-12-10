@@ -55,7 +55,7 @@ namespace component {
         explicit Board(Figure nextFigure);
 
         /**
-         * Provide game field
+         * Render game field
          * @param renderer
          */
         void render(SDL_Renderer *renderer) override;

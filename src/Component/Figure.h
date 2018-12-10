@@ -33,6 +33,7 @@ namespace component {
 
         /**
          * Render figure
+         * @param renderer
          */
         void render(SDL_Renderer *renderer) override;
 

@@ -17,14 +17,12 @@ Board::Board(Figure nextFigure) : boardScore_(0), boardLife_(1), nextFigure_(nex
 }
 
 void Board::render(SDL_Renderer *renderer) {
-    int figScale = getObjectScale();
-
     // Create next figure background shadow
     drawRectangle(renderer, Color{50, 50, 50, 128}, HalfScreen + RECT_BORDER, 0, HalfScreen, ScreenWidth);
 
     // Render current figure
-    nextFigure_.cX_ = MaxFieldX + 5;
-    nextFigure_.cY_ = 1;
+    nextFigure_.cX_ = MaxFieldX + 4;
+    nextFigure_.cY_ = 15;
     nextFigure_.render(renderer);
 
     // Draw game field and render falling figure
@@ -40,10 +38,10 @@ void Board::render(SDL_Renderer *renderer) {
             drawRectangle(
                     renderer,
                     *gameBoardCellColor,
-                    x * figScale + RECT_BORDER,
-                    y * figScale + RECT_BORDER,
-                    figScale - RECT_BORDER,
-                    figScale - RECT_BORDER
+                    x * getObjectScale() + RECT_BORDER,
+                    y * getObjectScale() + RECT_BORDER,
+                    getObjectScale() - RECT_BORDER,
+                    getObjectScale() - RECT_BORDER
             );
         }
     }
@@ -108,7 +106,7 @@ void Board::setNextFigure(Figure next) {
 }
 
 Figure Board::getNextFigure() {
-    nextFigure_.cX_ = MaxFieldX / 2 - 2;
+    nextFigure_.cX_ = (MaxFieldX >> 1) - 2;
     nextFigure_.cY_ = 0;
 
     return nextFigure_;
@@ -153,7 +151,7 @@ void Board::clearAvailableLines(Matrix *matrix, unsigned int &clearedCount) {
 }
 
 void Board::calculateScore(unsigned int removedLines) {
-    boardScore_ += (boardLife_ + 1) * 2;
+    boardScore_ += (boardLife_ + 1) << 1;
 
     if (removedLines != 0) {
         boardScore_ += 80 * (removedLines + boardLife_);
