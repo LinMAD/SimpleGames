@@ -3,7 +3,6 @@ conanbuildinfo.cmake
 conanbuildinfo.txt
 conaninfo.txt
 
-
 #IDE
 .idea/
 
@@ -55,3 +54,10 @@ assets/.DS_Store
 *.exe
 *.out
 *.app
+
+# Visual studio artifacts
+.vs/*
+Debug
+x64
+x86
+packages
