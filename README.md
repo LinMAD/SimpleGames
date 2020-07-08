@@ -2,16 +2,19 @@
 
 ![](img/logo.png)
 
-> My favorite old school games in my own implementation with SFML and SDL2.
+> My favorite old school style games\mechanics. 
+>> All wrapped with SFML or SDL2 and covered with my coding techniques.
 
 ## Game list
 
 > SDL2
 - [Tetris](SDL2/Tetris)
+
 ![](img/sdl2_tetris.png)
 
 > SFML
 - [Tetris](SFML/NeonTetris)
+
 ![](img/sfml_tetris.png)
 ---
 
