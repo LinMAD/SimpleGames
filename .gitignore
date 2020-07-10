@@ -56,7 +56,7 @@ assets/.DS_Store
 *.app
 
 # Visual studio artifacts
-.vs/*
+.vs
 Debug
 x64
 x86
