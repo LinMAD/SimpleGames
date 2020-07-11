@@ -7,6 +7,11 @@
 
 ## Game list
 
+> Text based
+- [Raycasting Maze](ASCII/Rogesci)
+
+![](ASCII/Rogesci/media/term_raycast.PNG)
+
 > SDL2
 - [Tetris](SDL2/Tetris)
 
