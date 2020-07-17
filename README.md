@@ -19,7 +19,7 @@
 
 | SFML | 
 | ------------- | 
-| [Tetris](SFML/NeonTetris)) | 
+| [Tetris](SFML/NeonTetris) | 
 | ![](img/sfml_tetris.png) |
 | [Super Mario Bros. NES](SFML/SuperMarioBros) | 
 | ![](img/SuperMarioBros.gif) |

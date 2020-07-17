@@ -33,7 +33,8 @@ void ScreenRender::Init() {
 }
 
 void ScreenRender::Update() {
-    system("cls"); // TODO That couses flash in the screen refactor
+    for (int l = 0; l < GameStructure::MAP_HEIGHT * GameStructure::SCREEN_WIDTH; l++)
+        cout << "\b";
 
     // Scroll screen
     int left = _gm->GetPlayer()->x - GameStructure::SCREEN_WIDTH / 2;
@@ -51,7 +52,7 @@ void ScreenRender::Update() {
             int actor = _gm->GetCharacter(x, y);
 
             if (_gm->field[y][x] == GameStructure::Props::EXPLOSION) {
-                cout << (char) GameStructure::Props::explosionASCII;
+                cout << (char)*GameStructure::Props::cellASCII[_gm->field[y][x]];
             } else if (actor > 0) {
                 cout << (char) GameStructure::Props::enemyASCII;
             } else if (actor == 0) {

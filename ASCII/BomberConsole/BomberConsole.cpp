@@ -16,25 +16,32 @@ int gameField[GameStructure::MAP_HEIGHT][GameStructure::MAP_WIDTH];
 Character gameCharacters[GameStructure::Character::MAX_ACTORS];
 BombWeapon gameBombs[GameStructure::Bomb::MAX];
 
-void PrepareConsole() {
+HANDLE PrepareConsole() {
     // Set code page 437
     SetConsoleCP(437);
     SetConsoleOutputCP(437);
 
     // Move window to required position
     HWND console = GetConsoleWindow();
-    MoveWindow(console, 100, 100, 750, 800, TRUE); // TODO Fix w and h to dynamic it's always now 1
+
+    MoveWindow(
+        console, 
+        50,
+        50, 
+        800,
+        800,
+        TRUE
+    ); // TODO Fix w and h to dynamic it's always now 1
+
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // Remove scroll bar
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO info;
     GetConsoleScreenBufferInfo(handle, &info);
-    COORD new_size =
-            {
-                    info.srWindow.Right - info.srWindow.Left + 1,
-                    info.srWindow.Bottom - info.srWindow.Top + 1
-            };
+    COORD new_size = {info.srWindow.Right - info.srWindow.Left + 1, info.srWindow.Bottom - info.srWindow.Top + 1};
     SetConsoleScreenBufferSize(handle, new_size);
+
+    return handle;
 }
 
 void FindFreeLocation(GameManager *gm, int *x, int *y) {
@@ -64,7 +71,10 @@ void FindFreeLocation(GameManager *gm, int *x, int *y) {
 int main() {
     srand((unsigned int) time(NULL));
 
-    PrepareConsole();
+    HANDLE console = PrepareConsole();
+    CONSOLE_SCREEN_BUFFER_INFO csbi = { 0 };
+    GetConsoleScreenBufferInfo(console, &csbi);
+    COORD coordCur = csbi.dwCursorPosition;
 
     GameManager gm(gameField, gameCharacters, gameBombs);
     InputController inputController(&gm);
@@ -83,6 +93,9 @@ int main() {
 
     // Game loop
     while (true) {
+        // Set console cursore back to refresh screen
+        coordCur.X = coordCur.Y = 0;
+        SetConsoleCursorPosition(console, coordCur);
         render.Update();
 
         // Keyboard inputs

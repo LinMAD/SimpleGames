@@ -23,11 +23,10 @@ static struct GameStructure {
             MAX
         };
 
-        static const int cellASCII[3][1];
+        static const int cellASCII[4][1];
         static const int enemyASCII = 228;      // Σ
         static const int playerASCII = 64;      // @
         static const int bombASCII = 233;       // Θ
-        static const int explosionASCII = 206;  // ╬
     };
 
     static struct Character {
