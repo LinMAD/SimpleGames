@@ -1,33 +1,37 @@
-# Simple games with C++
-
 ![](img/logo.png)
 
-> My favorite old school styled games\mechanics. 
->> All wrapped with SFML or SDL2 and covered with my coding techniques.
+# Simple demo games with C++
 
-## Game list
+> Inspiret with old school titles 🎲
+> These games can be incomplete, so that means they can miss UI components, game mechanics, or game over screens.
 
-> Text based
-- [Raycasting Maze](ASCII/Rogesci)
-
-![](ASCII/Rogesci/media/term_raycast.PNG)
-
-> SDL2
-- [Tetris](SDL2/Tetris)
-
-![](img/sdl2_tetris.png)
-
-> SFML
-- [Super Mario Bros. NES](SFML/SuperMarioBros)
-
-![](img/SuperMarioBros.gif)
-
-- [Tetris](SFML/NeonTetris)
-
-![](img/sfml_tetris.png)
 ---
 
-## FAQ
+## Game list 🎮
+
+| Text based (ASCII)  | 
+| ------------- | 
+| [Raycasting Maze](ASCII/Rogesci) | 
+| ![](img/term_raycast.PNG) |
+| [Bomber Console](ASCII/BomberConsole) | 
+| ![](img/BomberConsole.gif) |
+
+
+| SFML | 
+| ------------- | 
+| [Tetris](SFML/NeonTetris)) | 
+| ![](img/sfml_tetris.png) |
+| [Super Mario Bros. NES](SFML/SuperMarioBros) | 
+| ![](img/SuperMarioBros.gif) |
+
+| SDL2 | 
+| ------------- | 
+| [Tetris](SDL2/Tetris) | 
+| ![](img/sdl2_tetris.png) |
+
+---
+
+## FAQ 🌟 
 
 - **Visual studio configuration**
     - You can face down an issue with the building (missing links, symbols, etc.). Make sure you downloaded MSVC for desktop dev with C++
