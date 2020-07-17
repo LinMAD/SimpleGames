@@ -9,25 +9,20 @@
 
 ## Game list 🎮
 
-| Text based (ASCII)  | 
-| ------------- | 
-| [Raycasting Maze](ASCII/Rogesci) | 
-| ![](img/term_raycast.PNG) |
-| [Bomber Console](ASCII/BomberConsole) | 
-| ![](img/BomberConsole.gif) |
+| Text based (ASCII) | |
+| ------------- | ------------- | 
+| [Raycasting Maze](ASCII/Rogesci) | ![](img/term_raycast.gif) |
+| [Bomber Console](ASCII/BomberConsole) | ![](img/BomberConsole.gif) |
 
 
-| SFML | 
-| ------------- | 
-| [Tetris](SFML/NeonTetris) | 
-| ![](img/sfml_tetris.png) |
-| [Super Mario Bros. NES](SFML/SuperMarioBros) | 
-| ![](img/SuperMarioBros.gif) |
+| SFML | |
+| ------------- | ------------- | 
+| [Tetris](SFML/NeonTetris) | ![](img/sfml_tetris.png) |
+| [Super Mario Bros. NES](SFML/SuperMarioBros) | ![](img/SuperMarioBros.gif) |
 
-| SDL2 | 
-| ------------- | 
-| [Tetris](SDL2/Tetris) | 
-| ![](img/sdl2_tetris.png) |
+| SDL2 | |
+| ------------- | ------------- | 
+| [Tetris](SDL2/Tetris) | ![](img/sdl2_tetris.png) |
 
 ---
 

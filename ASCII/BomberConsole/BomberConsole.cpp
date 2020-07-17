@@ -11,6 +11,8 @@
 
 using namespace std;
 
+bool isGameOver = false;
+
 // gameField[y][x] == 0 will be on the left top corner. 
 int gameField[GameStructure::MAP_HEIGHT][GameStructure::MAP_WIDTH];
 Character gameCharacters[GameStructure::Character::MAX_ACTORS];
@@ -28,8 +30,8 @@ HANDLE PrepareConsole() {
         console, 
         50,
         50, 
-        800,
-        800,
+        72,
+        16,
         TRUE
     ); // TODO Fix w and h to dynamic it's always now 1
 
@@ -92,7 +94,7 @@ int main() {
         FindFreeLocation(&gm, &gameCharacters[i].x, &gameCharacters[i].y);
 
     // Game loop
-    while (true) {
+    while (!isGameOver) {
         // Set console cursore back to refresh screen
         coordCur.X = coordCur.Y = 0;
         SetConsoleCursorPosition(console, coordCur);
@@ -104,8 +106,14 @@ int main() {
         gm.HandleBombsExplosion();
         gm.HandleEnemiesMovment();
 
-        Sleep(60); // TODO Refactor that to frames per second
+        isGameOver = gm.GetPlayer()->isDead;
+        if (!isGameOver) {
+            for (int i = 1; i < GameStructure::Character::MAX_ACTORS; i++) {
+                isGameOver = gameCharacters[i].isDead;
+            }
+        }
     }
 
-    return 0;
+    printf("Game over!\n");
+    exit(0);
 }

@@ -1,8 +1,9 @@
 ﻿#pragma once
 static struct GameStructure {
-    static const int MAP_WIDTH = 40;
+    static const int MAP_WIDTH = 100;
     static const int MAP_HEIGHT = 15;
-    static const int SCREEN_WIDTH = 30;
+    static const int SCREEN_WIDTH = 60;
+    static const int SCREEN_HEIGHT = 40;
 
     enum Direction {
         NORTH,

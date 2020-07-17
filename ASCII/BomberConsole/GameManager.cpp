@@ -79,7 +79,7 @@ void GameManager::HandleBombsExplosion() {
                     } else {
                         // He's dead Jim
                         int actor = GetCharacter(x2, y2);
-                        if (actor > 1) characters[actor].isDead = true;
+                        if (actor >= 0) characters[actor].isDead = true;
                         field[y2][x2] = GameStructure::Props::EXPLOSION;
                     }
                 }
