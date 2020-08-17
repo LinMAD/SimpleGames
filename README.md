@@ -18,7 +18,8 @@
 | SFML | |
 | ------------- | ------------- | 
 | [Tetris](SFML/NeonTetris) | ![](img/sfml_tetris.png) |
-| [Super Mario Bros. NES](SFML/SuperMarioBros) | ![](img/SuperMarioBros.gif) |
+| [Spacing](SFML/Spacing) | ![](img/sfml_spacing.gif) |
+| [Super Mario Bros. NES](SFML/SuperMarioBros) | ![](img/sfml_supermariobros.gif) |
 
 | SDL2 | |
 | ------------- | ------------- | 
