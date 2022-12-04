@@ -1,37 +1,91 @@
-![](img/logo.png)
-
-# Simple demo games with C++
-
-> Inspiret with old school titles 🎲
-> These games can be incomplete, so that means they can miss UI components, game mechanics, or game over screens.
+<table>
+  <tbody>
+    <tr>
+      <td><b>About 👾</b></td>
+      <td width="50%" rowspan="4">
+        <img alt="Logo" src="docs/img/logo.png" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>
+            Inspired with old school titles 🎲
+            This repository contains a collection of different game mechanics, systems, and experiments.
+        </p>
+      </td>
+    </tr>
+    <tr><td><b>Game Development🧙</b></td></tr>
+    <tr>
+      <td width="50%">
+        <p>
+            The development platform was Windows or Linux Debian and projects may not compile on other platforms.
+            Project dependencies related to the platform must be installed manually or by package managers.
+            Technologies are the most stable but over time abstract libraries for graphics, and audio processing like SDL or SFML may be updated.
+            Since it's more like PoC or experiments, code tested manually and algorithms are not optimal.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## Game list 🎮
-
-| Text based (ASCII) | |
-| ------------- | ------------- | 
-| [Raycasting Maze](ASCII/Rogesci) | ![](img/term_raycast.gif) |
-| [Bomber Console](ASCII/BomberConsole) | ![](img/BomberConsole.gif) |
-
-
-| SFML | |
-| ------------- | ------------- | 
-| [Tetris](SFML/NeonTetris) | ![](img/sfml_tetris.png) |
-| [Spacing](SFML/Spacing) | ![](img/sfml_spacing.gif) |
-| [Super Mario Bros. NES](SFML/SuperMarioBros) | ![](img/sfml_supermariobros.gif) |
-
-| SDL2 | |
-| ------------- | ------------- | 
-| [Tetris](SDL2/Tetris) | ![](img/sdl2_tetris.png) |
+<table>
+    <tr>
+        <td>
+            <img src="docs/img/term_raycast.gif" alt="demo"/>
+        </td>
+        <td>
+            <a href="./ASCII/Rogesci">Raycasting - Maze</a>
+            <p>[C++, Windows Command Prompt, ASCII]</p>
+        </td>
+        <td>
+            <img src="docs/img/BomberConsole.gif" alt="demo"/>
+        </td>
+        <td>
+            <a href="./ASCII/Bomber">Bomber Console</a>
+            <p>[C++, Windows Command Prompt, ASCII]</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="docs/img/sfml_tetris.png" alt="demo"/>
+        </td>
+        <td>
+            <a href="./SFML/NeonTetris">Tetris</a>
+            <p>[C++, SFML]</p>
+        </td>
+        <td>
+            <img src="docs/img/sfml_spacing.gif" alt="demo"/>
+        </td>
+        <td>
+            <a href="./SFML/Spacing">Space Shooter</a>
+            <p>[C++, SFML]</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="docs/img/sdl2_tetris.png" alt="demo"/>
+        </td>
+        <td>
+            <a href="./SDL2/Tetris">Tetris</a>
+            <p>[C++, SDL2]</p>
+        </td>
+        <td>
+            <img src="docs/img/sfml_supermariobros.gif" alt="demo"/>
+        </td>
+        <td>
+            <a href="./SFML/SuperMarioBros">Super Mario Bros - First level copy (scrolling logic)</a>
+            <p>©Nintendo Co., Ltd.</p>
+            <p>[C++, SFML]</p>
+        </td>
+    </tr>
+</table>
 
 ---
 
-## FAQ 🌟 
+## Notes 🌟
 
-- **Visual studio configuration**
-    - You can face down an issue with the building (missing links, symbols, etc.). Make sure you downloaded MSVC for desktop dev with C++
-    - SFML 2.5.1 Requires platform toolset VS 2017 (v141) and check Windows SDK 10.0
-- **Where sprites come from**
-	- They made by me or I found them at https://www.spriters-resource.com/.
+- Assets made by me, or I found them at https://www.spriters-resource.com
+- Projects with SFML require **Visual Studio 2017 build tools** you can download them via Visual Studio Installer
 ---

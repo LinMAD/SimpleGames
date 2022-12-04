@@ -14,8 +14,9 @@ using namespace characters;
 int main() {
     bool isGameOver = false;
 
-    Clock clock;
+    Clock deltaClock;
     RenderWindow window(VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "Super Mario Bros.");
+    window.setFramerateLimit(60);
 
     // Load gloabl resources
     Texture texTileSet;
@@ -47,12 +48,11 @@ int main() {
     }
 
     while (!isGameOver) {
-        float deltaTime = clock.getElapsedTime().asMicroseconds();
-        clock.restart();
-
         // Keep always same speed of the game
-        if (deltaTime /= 500 > 20)
-            deltaTime = 20;
+        float deltaTime = deltaClock.getElapsedTime().asMicroseconds();
+        deltaClock.restart();
+
+        if (deltaTime /= 500 > 20) deltaTime = 20;
 
         Event event;
         while (window.pollEvent(event))
@@ -88,7 +88,6 @@ int main() {
         player.UpdateFrame(deltaTime);
 
         window.draw(player.sprite);
-
         window.display();
     }
 
