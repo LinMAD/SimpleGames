@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RogueShooter", "RogueShooter.vcxproj", "{AF982006-A48E-4D2B-8915-1CE835A8C629}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF982006-A48E-4D2B-8915-1CE835A8C629}.Debug|x64.ActiveCfg = Debug|x64
+		{AF982006-A48E-4D2B-8915-1CE835A8C629}.Debug|x64.Build.0 = Debug|x64
+		{AF982006-A48E-4D2B-8915-1CE835A8C629}.Release|x64.ActiveCfg = Release|x64
+		{AF982006-A48E-4D2B-8915-1CE835A8C629}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5757CA8-20B0-4C41-9A18-C44ACE111246}
+	EndGlobalSection
+EndGlobal

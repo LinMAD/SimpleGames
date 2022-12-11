@@ -52,14 +52,14 @@
             <img src="docs/img/sfml_tetris.png" alt="demo"/>
         </td>
         <td>
-            <a href="./SFML/NeonTetris">Tetris</a>
+            <a href="old/SFML/NeonTetris">Tetris</a>
             <p>[C++, SFML]</p>
         </td>
         <td>
             <img src="docs/img/sfml_spacing.gif" alt="demo"/>
         </td>
         <td>
-            <a href="./SFML/Spacing">Space Shooter</a>
+            <a href="old/SFML/Spacing">Space Shooter</a>
             <p>[C++, SFML]</p>
         </td>
     </tr>
@@ -68,14 +68,14 @@
             <img src="docs/img/sdl2_tetris.png" alt="demo"/>
         </td>
         <td>
-            <a href="./SDL2/Tetris">Tetris</a>
+            <a href="old/SDL2/Tetris">Tetris</a>
             <p>[C++, SDL2]</p>
         </td>
         <td>
             <img src="docs/img/sfml_supermariobros.gif" alt="demo"/>
         </td>
         <td>
-            <a href="./SFML/SuperMarioBros">Super Mario Bros - First level copy (scrolling logic)</a>
+            <a href="old/SFML/SuperMarioBros">Super Mario Bros - First level copy (scrolling logic)</a>
             <p>©Nintendo Co., Ltd.</p>
             <p>[C++, SFML]</p>
         </td>
